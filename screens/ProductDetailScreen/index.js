@@ -29,6 +29,7 @@ export default function ProductDetailScreen({ navigation, route }) {
   const [isFav,      setIsFav]      = useState(false);
   const [favLoading, setFavLoading] = useState(false);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (user) loadFavoriteStatus();
   }, [user]);

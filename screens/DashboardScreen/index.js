@@ -29,9 +29,8 @@ export default function DashboardScreen({ navigation }) {
   });
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchStats();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { fetchStats(); }, []);
 
   async function fetchStats() {
     setLoading(true);

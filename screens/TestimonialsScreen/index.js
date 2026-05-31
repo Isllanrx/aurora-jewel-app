@@ -27,9 +27,8 @@ export default function TestimonialsScreen({ navigation }) {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchTestimonials();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { fetchTestimonials(); }, []);
 
   async function fetchTestimonials() {
     setLoading(true);

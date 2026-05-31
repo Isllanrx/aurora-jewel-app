@@ -38,10 +38,10 @@ export default function ProductsScreen({ navigation, route }) {
   const [category, setCategory] = useState(route.params?.category ?? 'all');
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { fetchProducts(); }, []);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     applyFilter(category, products);
   }, [category, products]);
