@@ -38,3 +38,8 @@ assets/
 
 # SQL schema — ferramenta de desenvolvimento, não necessário no Snack
 supabase_schema.sql
+
+# Markdown — docs de dev/AI, não necessários no Snack
+# README.md é mantido rastreado (exceção abaixo)
+*.md
+!README.md
