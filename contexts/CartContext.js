@@ -1,0 +1,80 @@
+import React, { createContext, useContext, useState } from 'react';
+
+const CartContext = createContext(null);
+
+export function CartProvider({ children }) {
+  const [cartItems, setCartItems] = useState([]);
+
+  function addToCart(product) {
+    setCartItems(prev => {
+      const existing = prev.find(item => item.id === product.id);
+      if (existing) {
+        return prev.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [...prev, { ...product, quantity: 1 }];
+    });
+  }
+
+  function removeFromCart(productId) {
+    setCartItems(prev => prev.filter(item => item.id !== productId));
+  }
+
+  function updateQuantity(productId, quantity) {
+    if (quantity <= 0) {
+      removeFromCart(productId);
+      return;
+    }
+    setCartItems(prev =>
+      prev.map(item =>
+        item.id === productId ? { ...item, quantity } : item
+      )
+    );
+  }
+
+  function clearCart() {
+    setCartItems([]);
+  }
+
+  function getTotalItems() {
+    return cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  }
+
+  function getTotalPrice() {
+    const total = cartItems.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+    return total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  }
+
+  function getTotalPriceNumber() {
+    return cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  }
+
+  return (
+    <CartContext.Provider
+      value={{
+        cartItems,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        clearCart,
+        getTotalItems,
+        getTotalPrice,
+        getTotalPriceNumber,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
+}
+
+export function useCart() {
+  const ctx = useContext(CartContext);
+  if (!ctx) throw new Error('useCart must be used inside CartProvider');
+  return ctx;
+}
