@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "Aurora Joias",
+    "slug": "aurora-jewel-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/logo_joias.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/logo_joias.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0A0A0A"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.aurorajoias.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/logo_joias.png",
+        "backgroundColor": "#0A0A0A"
+      },
+      "package": "com.aurorajoias.app"
+    },
+    "web": {
+      "favicon": "./assets/logo_joias.png"
+    }
+  }
+}
