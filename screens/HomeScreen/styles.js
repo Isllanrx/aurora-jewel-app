@@ -14,42 +14,23 @@ export default StyleSheet.create({
     paddingVertical: 12,
     backgroundColor: Colors.surface,
   },
-  hamburger: {
+  headerBtn: {
     padding: 4,
-  },
-  hamburgerIcon: {
-    fontSize: 22,
-    color: Colors.text,
+    position: 'relative',
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     color: Colors.secondary,
   },
-  cartBtn: {
-    padding: 4,
-  },
-  cartBadgeWrap: {
-    position: 'relative',
-  },
-  cartIcon: {
-    fontSize: 22,
-  },
-  cartBadge: {
+  cartDot: {
     position: 'absolute',
-    top: -4,
-    right: -4,
+    top: 2,
+    right: 2,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
     backgroundColor: Colors.primary,
-    borderRadius: 8,
-    minWidth: 16,
-    height: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  cartBadgeText: {
-    color: Colors.white,
-    fontSize: 10,
-    fontWeight: 'bold',
   },
   hero: {
     backgroundColor: Colors.surface,
@@ -69,7 +50,9 @@ export default StyleSheet.create({
   heroTagText: {
     color: Colors.secondary,
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: '600',
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
   },
   heroTitle: {
     fontSize: 28,
@@ -155,10 +138,6 @@ export default StyleSheet.create({
     minWidth: 90,
     borderWidth: 1,
     borderColor: Colors.border,
-  },
-  categoryIcon: {
-    fontSize: 28,
-    marginBottom: 6,
   },
   categoryLabel: {
     color: Colors.text,

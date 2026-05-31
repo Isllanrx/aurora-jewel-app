@@ -1,13 +1,13 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../lib/colors';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
 import DrawerContent from './DrawerContent';
 
-// Screens
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import HomeScreen from '../screens/HomeScreen';
@@ -28,10 +28,10 @@ function HamburgerButton({ navigation }) {
   return (
     <TouchableOpacity
       onPress={() => navigation.openDrawer()}
-      style={styles.hamburger}
+      style={styles.headerBtn}
       hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
     >
-      <Text style={styles.hamburgerIcon}>☰</Text>
+      <Ionicons name="menu" size={24} color={Colors.text} />
     </TouchableOpacity>
   );
 }
@@ -42,26 +42,18 @@ function CartButton({ navigation }) {
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('Cart')}
-      style={styles.cartBtn}
+      style={styles.headerBtn}
       hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
     >
-      <Text style={styles.cartIcon}>🛒</Text>
+      <Ionicons name="cart-outline" size={24} color={Colors.text} />
       {count > 0 && (
         <View style={styles.cartBadge}>
-          <Text style={styles.cartBadgeText}>{count}</Text>
+          <Ionicons name="ellipse" size={6} color={Colors.primary} />
         </View>
       )}
     </TouchableOpacity>
   );
 }
-
-const SCREEN_OPTIONS = (navigation) => ({
-  headerStyle: { backgroundColor: Colors.surface },
-  headerTintColor: Colors.text,
-  headerTitleStyle: { color: Colors.secondary, fontWeight: 'bold', fontSize: 18 },
-  headerLeft: () => <HamburgerButton navigation={navigation} />,
-  headerRight: () => <CartButton navigation={navigation} />,
-});
 
 function MainDrawer() {
   return (
@@ -102,35 +94,13 @@ export default function AppNavigator() {
 }
 
 const styles = StyleSheet.create({
-  hamburger: {
-    marginLeft: 14,
+  headerBtn: {
     padding: 4,
-  },
-  hamburgerIcon: {
-    fontSize: 22,
-    color: Colors.text,
-  },
-  cartBtn: {
-    marginRight: 14,
-    padding: 4,
-  },
-  cartIcon: {
-    fontSize: 22,
+    marginHorizontal: 14,
   },
   cartBadge: {
     position: 'absolute',
-    top: -4,
-    right: -4,
-    backgroundColor: Colors.primary,
-    borderRadius: 8,
-    minWidth: 16,
-    height: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  cartBadgeText: {
-    color: Colors.white,
-    fontSize: 10,
-    fontWeight: 'bold',
+    top: 0,
+    right: 0,
   },
 });

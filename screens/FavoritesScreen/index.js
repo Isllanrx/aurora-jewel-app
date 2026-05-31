@@ -7,7 +7,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { dbSelect, dbInsert, dbDelete } from '../../lib/supabase';
+import { Ionicons } from '@expo/vector-icons';
+import { dbSelect } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import ProductCard from '../../components/ProductCard';
@@ -34,9 +35,7 @@ export default function FavoritesScreen({ navigation }) {
   async function fetchFavorites() {
     setLoading(true);
     try {
-      // GET /rest/v1/favorites?user_id=eq.UUID&select=*
       const rows = await dbSelect('favorites', { 'user_id': `eq.${user.id}` }, token);
-      // Para cada favorito, busca o produto
       const productIds = rows.map(r => r.product_id);
       if (productIds.length === 0) { setFavorites([]); return; }
 
@@ -71,7 +70,7 @@ export default function FavoritesScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          <Text style={styles.hamburgerIcon}>☰</Text>
+          <Ionicons name="menu" size={24} color={Colors.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{t('myFavorites')}</Text>
         <View style={{ width: 28 }} />
@@ -79,7 +78,7 @@ export default function FavoritesScreen({ navigation }) {
 
       {favorites.length === 0 ? (
         <View style={styles.emptyWrapper}>
-          <Text style={styles.emptyIcon}>❤️</Text>
+          <Ionicons name="heart-outline" size={64} color={Colors.textMuted} style={{ marginBottom: 12 }} />
           <Text style={styles.emptyText}>{t('emptyFavorites')}</Text>
           <TouchableOpacity
             style={styles.shopButton}

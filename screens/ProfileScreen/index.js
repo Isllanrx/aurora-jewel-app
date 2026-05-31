@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import { dbUpdate } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -25,7 +26,7 @@ export default function ProfileScreen({ navigation }) {
 
   const initials = name
     ? name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2)
-    : '👤';
+    : '';
 
   const joinedDate = user?.created_at
     ? new Date(user.created_at).toLocaleDateString('pt-BR')
@@ -34,10 +35,9 @@ export default function ProfileScreen({ navigation }) {
   async function handleSave() {
     setSaving(true);
     try {
-      // PATCH /rest/v1/profiles?id=eq.UUID
       await dbUpdate('profiles', { id: user.id }, { name, phone }, token);
       setEditing(false);
-      Alert.alert(t('success'), 'Perfil atualizado!');
+      Alert.alert(t('success'), 'Perfil atualizado.');
     } catch (err) {
       Alert.alert(t('error'), err.message);
     } finally {
@@ -63,7 +63,7 @@ export default function ProfileScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          <Text style={styles.hamburgerIcon}>☰</Text>
+          <Ionicons name="menu" size={24} color={Colors.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{t('profileTitle')}</Text>
         <View style={{ width: 28 }} />
@@ -72,7 +72,10 @@ export default function ProfileScreen({ navigation }) {
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <View style={styles.avatarWrapper}>
           <View style={styles.avatar}>
-            <Text style={styles.avatarText}>{initials}</Text>
+            {initials
+              ? <Text style={styles.avatarText}>{initials}</Text>
+              : <Ionicons name="person" size={40} color={Colors.secondary} />
+            }
           </View>
           <Text style={styles.userName}>{name || 'Aurora'}</Text>
           <Text style={styles.userEmail}>{user?.email}</Text>

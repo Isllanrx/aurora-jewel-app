@@ -29,7 +29,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.border,
   },
-  statIcon:   { fontSize: 36, marginRight: 16 },
+  statIcon:   { marginRight: 16 },
   statNumber: { fontSize: 28, fontWeight: 'bold', color: Colors.secondary },
   statLabel:  { color: Colors.textMuted, fontSize: 13, marginTop: 2 },
   sectionTitle: {

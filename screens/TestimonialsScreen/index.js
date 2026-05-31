@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import { dbSelect } from '../../lib/supabase';
 import { useLanguage } from '../../contexts/LanguageContext';
 import TestimonialCard from '../../components/TestimonialCard';
@@ -33,7 +34,6 @@ export default function TestimonialsScreen({ navigation }) {
   async function fetchTestimonials() {
     setLoading(true);
     try {
-      // GET /rest/v1/testimonials?select=*
       const data = await dbSelect('testimonials');
       setTestimonials(data.length > 0 ? data : LOCAL_TESTIMONIALS);
     } catch (err) {
@@ -56,7 +56,7 @@ export default function TestimonialsScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          <Text style={styles.hamburgerIcon}>☰</Text>
+          <Ionicons name="menu" size={24} color={Colors.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{t('testimonialsTitle')}</Text>
         <View style={{ width: 28 }} />

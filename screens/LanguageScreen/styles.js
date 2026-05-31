@@ -14,8 +14,7 @@ export default StyleSheet.create({
     paddingVertical: 12,
     backgroundColor: Colors.surface,
   },
-  hamburgerIcon: { fontSize: 22, color: Colors.text },
-  headerTitle:   { fontSize: 18, fontWeight: 'bold', color: Colors.secondary },
+  headerTitle: { fontSize: 18, fontWeight: 'bold', color: Colors.secondary },
   scroll: {
     padding: 24,
   },
@@ -32,24 +31,49 @@ export default StyleSheet.create({
     marginBottom: 12,
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: Colors.border,
   },
   optionActive: {
     borderColor: Colors.primary,
-    backgroundColor: Colors.primary + '1A',
+    backgroundColor: Colors.primary + '18',
   },
-  flag:   { fontSize: 36, marginRight: 16 },
+  langCode: {
+    width: 44,
+    height: 44,
+    borderRadius: 8,
+    backgroundColor: Colors.surface,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 14,
+    borderWidth: 1,
+    borderColor: Colors.border,
+  },
+  langCodeActive: {
+    backgroundColor: Colors.primary + '33',
+    borderColor: Colors.primary,
+  },
+  langCodeText: {
+    fontSize: 13,
+    fontWeight: 'bold',
+    color: Colors.textMuted,
+    letterSpacing: 0.5,
+  },
+  langCodeTextActive: {
+    color: Colors.secondary,
+  },
   langName: {
-    flex: 1,
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '600',
     color: Colors.text,
   },
-  langNameActive: { color: Colors.secondary },
-  checkmark: {
-    fontSize: 20,
-    color: Colors.primary,
+  langNameActive: {
+    color: Colors.secondary,
+  },
+  langNative: {
+    fontSize: 12,
+    color: Colors.textMuted,
+    marginTop: 2,
   },
   saveBtn: {
     backgroundColor: Colors.primary,

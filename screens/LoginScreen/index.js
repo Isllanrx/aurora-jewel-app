@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../contexts/AuthContext';
@@ -19,7 +20,7 @@ import { Colors } from '../../lib/colors';
 
 function buildSchema(t) {
   return Yup.object({
-    email: Yup.string().email(t('invalidEmail')).required(t('required')),
+    email:    Yup.string().email(t('invalidEmail')).required(t('required')),
     password: Yup.string().min(6, t('passwordMin')).required(t('required')),
   });
 }
@@ -27,7 +28,7 @@ function buildSchema(t) {
 export default function LoginScreen({ navigation }) {
   const { login } = useAuth();
   const { t } = useLanguage();
-  const [loading,  setLoading]  = useState(false);
+  const [loading,   setLoading]   = useState(false);
   const [logoError, setLogoError] = useState(false);
 
   const formik = useFormik({
@@ -53,8 +54,8 @@ export default function LoginScreen({ navigation }) {
       <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
         <View style={styles.logoWrapper}>
           {logoError ? (
-            <View style={[styles.logo, { justifyContent: 'center', alignItems: 'center', backgroundColor: '#1C1C1C', borderRadius: 45 }]}>
-              <Text style={{ fontSize: 36 }}>💎</Text>
+            <View style={[styles.logo, { justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.card, borderRadius: 45 }]}>
+              <Ionicons name="diamond-outline" size={36} color={Colors.secondary} />
             </View>
           ) : (
             <Image

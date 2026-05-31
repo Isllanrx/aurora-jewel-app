@@ -33,7 +33,6 @@ export default StyleSheet.create({
     alignItems: 'flex-start',
   },
   cardIcon: {
-    fontSize: 24,
     marginRight: 14,
     marginTop: 2,
   },
@@ -60,6 +59,5 @@ export default StyleSheet.create({
     borderColor: Colors.border,
     marginTop: 8,
   },
-  mapIcon: { fontSize: 40, marginBottom: 8 },
-  mapText: { color: Colors.textMuted, fontSize: 14 },
+  mapText: { color: Colors.textMuted, fontSize: 14, marginTop: 8 },
 });

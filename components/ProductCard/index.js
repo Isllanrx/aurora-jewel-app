@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useCart } from '../../contexts/CartContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import styles from './styles';
 import { Colors } from '../../lib/colors';
 
-const CATEGORY_ICONS = { relogio: '⌚', anel: '💍', cordao: '📿' };
+const CATEGORY_ICONS = {
+  relogio: 'time-outline',
+  anel:    'diamond-outline',
+  cordao:  'link-outline',
+};
 
 export default function ProductCard({ product, onPress }) {
   const { addToCart } = useCart();
@@ -29,9 +34,11 @@ export default function ProductCard({ product, onPress }) {
       <View style={styles.imageWrapper}>
         {imgError ? (
           <View style={[styles.image, styles.imgFallback]}>
-            <Text style={styles.imgFallbackIcon}>
-              {CATEGORY_ICONS[product.category] ?? '💎'}
-            </Text>
+            <Ionicons
+              name={CATEGORY_ICONS[product.category] ?? 'image-outline'}
+              size={40}
+              color={Colors.textMuted}
+            />
           </View>
         ) : (
           <Image
@@ -62,7 +69,7 @@ export default function ProductCard({ product, onPress }) {
         activeOpacity={0.8}
       >
         <Text style={styles.addBtnText}>
-          {added ? `✓ OK` : `+ ${t('addToCart')}`}
+          {added ? t('addedToCart') : `+ ${t('addToCart')}`}
         </Text>
       </TouchableOpacity>
     </TouchableOpacity>

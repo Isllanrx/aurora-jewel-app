@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, Image } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import styles from './styles';
+import { Colors } from '../../lib/colors';
 
 const AVATAR_IMAGES = [
   require('../../assets/pic-1.png'),
@@ -14,13 +16,12 @@ export default function TestimonialCard({ testimonial, index = 0 }) {
 
   const initials = user_name
     ? user_name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2)
-    : '??';
+    : '--';
 
   const showImage = !imgError && (avatar_url || AVATAR_IMAGES[index % 3]);
 
   return (
     <View style={styles.card}>
-      <Text style={styles.quoteIcon}>"</Text>
       <View style={styles.header}>
         <View style={styles.avatar}>
           {showImage ? (
@@ -37,7 +38,7 @@ export default function TestimonialCard({ testimonial, index = 0 }) {
           <Text style={styles.userName}>{user_name}</Text>
           <View style={styles.starsRow}>
             {Array.from({ length: rating ?? 5 }).map((_, i) => (
-              <Text key={i} style={styles.star}>★</Text>
+              <Ionicons key={i} name="star" size={13} color={Colors.secondary} />
             ))}
           </View>
         </View>

@@ -9,6 +9,8 @@ export default StyleSheet.create({
     marginBottom: 12,
     borderWidth: 1,
     borderColor: Colors.border,
+    borderLeftWidth: 3,
+    borderLeftColor: Colors.primary,
   },
   header: {
     flexDirection: 'row',
@@ -27,7 +29,8 @@ export default StyleSheet.create({
     borderColor: Colors.primary,
   },
   avatarText: {
-    fontSize: 20,
+    fontSize: 16,
+    fontWeight: 'bold',
     color: Colors.secondary,
   },
   avatarImage: {
@@ -37,16 +40,10 @@ export default StyleSheet.create({
   },
   userName:  { color: Colors.text, fontWeight: 'bold', fontSize: 15 },
   starsRow:  { flexDirection: 'row', marginTop: 2 },
-  star:      { color: Colors.secondary, fontSize: 13 },
   review: {
     color: Colors.textMuted,
     fontSize: 14,
     lineHeight: 20,
     fontStyle: 'italic',
-  },
-  quoteIcon: {
-    color: Colors.primary,
-    fontSize: 24,
-    marginBottom: 4,
   },
 });

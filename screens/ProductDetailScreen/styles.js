@@ -26,11 +26,8 @@ export default StyleSheet.create({
     textAlign: 'center',
     marginHorizontal: 8,
   },
-  favBtn: {
+  headerBtn: {
     padding: 4,
-  },
-  favIcon: {
-    fontSize: 22,
   },
   imageWrapper: {
     backgroundColor: Colors.surface,

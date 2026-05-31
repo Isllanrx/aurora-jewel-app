@@ -24,7 +24,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingTop: 80,
   },
-  emptyIcon:  { fontSize: 56, marginBottom: 12 },
   emptyText:  { color: Colors.textMuted, fontSize: 16, marginBottom: 20 },
   shopButton: {
     backgroundColor: Colors.primary,

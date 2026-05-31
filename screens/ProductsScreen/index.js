@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Picker } from '@react-native-picker/picker';
+import { Ionicons } from '@expo/vector-icons';
 import { dbSelect } from '../../lib/supabase';
 import { useLanguage } from '../../contexts/LanguageContext';
 import ProductCard from '../../components/ProductCard';
@@ -78,11 +79,11 @@ export default function ProductsScreen({ navigation, route }) {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          <Text style={styles.hamburgerIcon}>☰</Text>
+          <Ionicons name="menu" size={24} color={Colors.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{t('products')}</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
-          <Text style={styles.cartIcon}>🛒</Text>
+          <Ionicons name="cart-outline" size={24} color={Colors.text} />
         </TouchableOpacity>
       </View>
 

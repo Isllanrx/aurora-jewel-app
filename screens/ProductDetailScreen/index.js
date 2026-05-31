@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import { useCart } from '../../contexts/CartContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -23,13 +24,11 @@ export default function ProductDetailScreen({ navigation, route }) {
   const { user, token } = useAuth();
   const { t } = useLanguage();
 
-  const [added,       setAdded]       = useState(false);
-  const [imgError,    setImgError]    = useState(false);
-  const [isFav,       setIsFav]       = useState(false);
-  const [favLoading,  setFavLoading]  = useState(false);
-  const [favRowId,    setFavRowId]    = useState(null);
+  const [added,      setAdded]      = useState(false);
+  const [imgError,   setImgError]   = useState(false);
+  const [isFav,      setIsFav]      = useState(false);
+  const [favLoading, setFavLoading] = useState(false);
 
-  // GET — carrega estado de favorito ao abrir a tela
   useEffect(() => {
     if (user) loadFavoriteStatus();
   }, [user]);
@@ -41,36 +40,20 @@ export default function ProductDetailScreen({ navigation, route }) {
         { 'user_id': `eq.${user.id}`, 'product_id': `eq.${product.id}` },
         token
       );
-      if (rows.length > 0) {
-        setIsFav(true);
-        setFavRowId(rows[0].id);
-      }
+      setIsFav(rows.length > 0);
     } catch {
-      // silently ignore; default false
+      // default false
     }
   }
 
-  // POST — adiciona aos favoritos
   async function addFavorite() {
-    const rows = await dbInsert(
-      'favorites',
-      { user_id: user.id, product_id: product.id },
-      token
-    );
-    const inserted = Array.isArray(rows) ? rows[0] : rows;
-    setFavRowId(inserted?.id ?? null);
+    await dbInsert('favorites', { user_id: user.id, product_id: product.id }, token);
     setIsFav(true);
   }
 
-  // DELETE — remove dos favoritos
   async function removeFavorite() {
-    await dbDelete(
-      'favorites',
-      { user_id: user.id, product_id: product.id },
-      token
-    );
+    await dbDelete('favorites', { user_id: user.id, product_id: product.id }, token);
     setIsFav(false);
-    setFavRowId(null);
   }
 
   async function handleFavToggle() {
@@ -80,11 +63,8 @@ export default function ProductDetailScreen({ navigation, route }) {
     }
     setFavLoading(true);
     try {
-      if (isFav) {
-        await removeFavorite();
-      } else {
-        await addFavorite();
-      }
+      if (isFav) await removeFavorite();
+      else       await addFavorite();
     } catch (err) {
       Alert.alert(t('error'), err.message);
     } finally {
@@ -105,20 +85,22 @@ export default function ProductDetailScreen({ navigation, route }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.backIcon}>←</Text>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
+          <Ionicons name="arrow-back" size={22} color={Colors.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle} numberOfLines={1}>{product.name}</Text>
-
-        {/* Botão favorito — dispara POST ou DELETE no Supabase */}
         <TouchableOpacity
-          style={styles.favBtn}
+          style={styles.headerBtn}
           onPress={handleFavToggle}
           disabled={favLoading}
         >
           {favLoading
             ? <ActivityIndicator size="small" color={Colors.primary} />
-            : <Text style={styles.favIcon}>{isFav ? '❤️' : '🤍'}</Text>
+            : <Ionicons
+                name={isFav ? 'heart' : 'heart-outline'}
+                size={22}
+                color={isFav ? Colors.error : Colors.text}
+              />
           }
         </TouchableOpacity>
       </View>
@@ -126,8 +108,8 @@ export default function ProductDetailScreen({ navigation, route }) {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.imageWrapper}>
           {imgError ? (
-            <View style={[styles.image, { justifyContent: 'center', alignItems: 'center' }]}>
-              <Text style={{ fontSize: 64 }}>💎</Text>
+            <View style={[styles.image, { justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.surface }]}>
+              <Ionicons name="image-outline" size={48} color={Colors.textMuted} />
             </View>
           ) : (
             <Image
@@ -157,7 +139,6 @@ export default function ProductDetailScreen({ navigation, route }) {
             )}
           </View>
 
-          {/* CategoryBadge — componente reutilizável */}
           <CategoryBadge category={product.category} />
 
           <View style={styles.divider} />
@@ -177,7 +158,7 @@ export default function ProductDetailScreen({ navigation, route }) {
           activeOpacity={0.8}
         >
           <Text style={styles.addButtonText}>
-            {added ? `✓ ${t('addedToCart')}` : t('addToCart')}
+            {added ? t('addedToCart') : t('addToCart')}
           </Text>
         </TouchableOpacity>
       </View>

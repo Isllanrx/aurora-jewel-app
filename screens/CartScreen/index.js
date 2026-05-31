@@ -7,17 +7,19 @@ import {
   Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import { useCart } from '../../contexts/CartContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import CartItem from '../../components/CartItem';
 import styles from './styles';
+import { Colors } from '../../lib/colors';
 
 export default function CartScreen({ navigation }) {
   const { cartItems, clearCart, getTotalPrice } = useCart();
   const { t } = useLanguage();
 
   function handleCheckout() {
-    Alert.alert(t('success'), 'Pedido realizado com sucesso! 🎉', [
+    Alert.alert(t('success'), 'Pedido realizado com sucesso.', [
       { text: 'OK', onPress: () => { clearCart(); navigation.navigate('Home'); } },
     ]);
   }
@@ -33,7 +35,7 @@ export default function CartScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          <Text style={styles.hamburgerIcon}>☰</Text>
+          <Ionicons name="menu" size={24} color={Colors.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{t('myCart')}</Text>
         {cartItems.length > 0
@@ -46,7 +48,7 @@ export default function CartScreen({ navigation }) {
 
       {cartItems.length === 0 ? (
         <View style={styles.emptyWrapper}>
-          <Text style={styles.emptyIcon}>🛒</Text>
+          <Ionicons name="cart-outline" size={64} color={Colors.textMuted} style={{ marginBottom: 12 }} />
           <Text style={styles.emptyText}>{t('emptyCart')}</Text>
           <TouchableOpacity
             style={styles.shopButton}

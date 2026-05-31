@@ -8,34 +8,23 @@ import {
   ScrollView,
 } from 'react-native';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
+import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../lib/colors';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useCart } from '../contexts/CartContext';
 
 const MENU_ITEMS = [
-  { key: 'Home',          icon: '🏠' },
-  { key: 'Products',      icon: '💎' },
-  { key: 'Cart',          icon: '🛒' },
-  { key: 'Favorites',     icon: '❤️' },
-  { key: 'Testimonials',  icon: '⭐' },
-  { key: 'Contact',       icon: '📍' },
-  { key: 'Dashboard',     icon: '📊' },
-  { key: 'Profile',       icon: '👤' },
-  { key: 'Language',      icon: '🌐' },
+  { key: 'Home',         icon: 'home-outline',       labelKey: 'home'         },
+  { key: 'Products',     icon: 'grid-outline',        labelKey: 'products'     },
+  { key: 'Cart',         icon: 'cart-outline',        labelKey: 'cart'         },
+  { key: 'Favorites',    icon: 'heart-outline',       labelKey: 'favorites'    },
+  { key: 'Testimonials', icon: 'chatbubbles-outline', labelKey: 'testimonials' },
+  { key: 'Contact',      icon: 'location-outline',    labelKey: 'contact'      },
+  { key: 'Dashboard',    icon: 'stats-chart-outline', labelKey: 'dashboard'    },
+  { key: 'Profile',      icon: 'person-outline',      labelKey: 'profile'      },
+  { key: 'Language',     icon: 'globe-outline',       labelKey: 'language'     },
 ];
-
-const LABEL_KEYS = {
-  Home:         'home',
-  Products:     'products',
-  Cart:         'cart',
-  Favorites:    'favorites',
-  Testimonials: 'testimonials',
-  Contact:      'contact',
-  Dashboard:    'dashboard',
-  Profile:      'profile',
-  Language:     'language',
-};
 
 export default function DrawerContent(props) {
   const { navigation, state } = props;
@@ -45,6 +34,7 @@ export default function DrawerContent(props) {
   const [logoError, setLogoError] = useState(false);
 
   const activeRouteName = state.routeNames[state.index];
+  const cartCount = getTotalItems();
 
   return (
     <DrawerContentScrollView
@@ -53,15 +43,15 @@ export default function DrawerContent(props) {
     >
       <View style={styles.header}>
         {logoError ? (
-          <View style={[styles.logo, { justifyContent: 'center', alignItems: 'center', backgroundColor: '#1C1C1C' }]}>
-            <Text style={{ fontSize: 28 }}>💎</Text>
+          <View style={styles.logoFallback}>
+            <Ionicons name="diamond-outline" size={28} color={Colors.secondary} />
           </View>
         ) : (
           <Image
             source={require('../assets/logo_joias.png')}
             style={styles.logo}
-            onError={() => setLogoError(true)}
             resizeMode="contain"
+            onError={() => setLogoError(true)}
           />
         )}
         <Text style={styles.brandName}>Aurora Joias</Text>
@@ -75,9 +65,9 @@ export default function DrawerContent(props) {
       <View style={styles.divider} />
 
       <ScrollView style={styles.menuList} showsVerticalScrollIndicator={false}>
-        {MENU_ITEMS.map(({ key, icon }) => {
+        {MENU_ITEMS.map(({ key, icon, labelKey }) => {
           const isActive = activeRouteName === key;
-          const cartCount = key === 'Cart' ? getTotalItems() : 0;
+          const showBadge = key === 'Cart' && cartCount > 0;
           return (
             <TouchableOpacity
               key={key}
@@ -85,11 +75,16 @@ export default function DrawerContent(props) {
               onPress={() => navigation.navigate(key)}
               activeOpacity={0.7}
             >
-              <Text style={styles.menuIcon}>{icon}</Text>
+              <Ionicons
+                name={icon}
+                size={18}
+                color={isActive ? Colors.secondary : Colors.textMuted}
+                style={styles.menuIcon}
+              />
               <Text style={[styles.menuLabel, isActive && styles.menuLabelActive]}>
-                {t(LABEL_KEYS[key])}
+                {t(labelKey)}
               </Text>
-              {cartCount > 0 && (
+              {showBadge && (
                 <View style={styles.badge}>
                   <Text style={styles.badgeText}>{cartCount}</Text>
                 </View>
@@ -109,7 +104,7 @@ export default function DrawerContent(props) {
         }}
         activeOpacity={0.7}
       >
-        <Text style={styles.logoutIcon}>🚪</Text>
+        <Ionicons name="log-out-outline" size={18} color={Colors.error} style={styles.menuIcon} />
         <Text style={styles.logoutText}>{t('logout')}</Text>
       </TouchableOpacity>
 
@@ -136,6 +131,17 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderWidth: 2,
     borderColor: Colors.primary,
+  },
+  logoFallback: {
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+    marginBottom: 10,
+    borderWidth: 2,
+    borderColor: Colors.primary,
+    backgroundColor: Colors.card,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   brandName: {
     fontSize: 20,
@@ -168,13 +174,12 @@ const styles = StyleSheet.create({
     marginVertical: 2,
   },
   menuItemActive: {
-    backgroundColor: Colors.primary + '33',
+    backgroundColor: Colors.primary + '22',
     borderLeftWidth: 3,
     borderLeftColor: Colors.primary,
   },
   menuIcon: {
-    fontSize: 18,
-    width: 28,
+    width: 26,
   },
   menuLabel: {
     flex: 1,
@@ -184,7 +189,7 @@ const styles = StyleSheet.create({
   },
   menuLabelActive: {
     color: Colors.secondary,
-    fontWeight: 'bold',
+    fontWeight: '600',
   },
   badge: {
     backgroundColor: Colors.primary,
@@ -206,10 +211,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 20,
     marginBottom: 4,
-  },
-  logoutIcon: {
-    fontSize: 18,
-    width: 28,
   },
   logoutText: {
     fontSize: 15,

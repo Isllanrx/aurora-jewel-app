@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../contexts/AuthContext';
@@ -18,12 +19,12 @@ import { Colors } from '../../lib/colors';
 
 function buildSchema(t) {
   return Yup.object({
-    name: Yup.string().min(2).required(t('required')),
+    name:  Yup.string().min(2).required(t('required')),
     email: Yup.string().email(t('invalidEmail')).required(t('required')),
     phone: Yup.string()
       .matches(/^\(\d{2}\)\s?\d{4,5}-\d{4}$/, t('phoneInvalid'))
       .required(t('required')),
-    password: Yup.string().min(6, t('passwordMin')).required(t('required')),
+    password:        Yup.string().min(6, t('passwordMin')).required(t('required')),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password')], t('passwordMatch'))
       .required(t('required')),
@@ -42,7 +43,7 @@ export default function RegisterScreen({ navigation }) {
       setLoading(true);
       try {
         await register(email, password, name, phone);
-        Alert.alert(t('success'), 'Conta criada! Verifique seu e-mail.', [
+        Alert.alert(t('success'), 'Conta criada. Verifique seu e-mail.', [
           { text: 'OK', onPress: () => navigation.navigate('Login') },
         ]);
       } catch (err) {
@@ -84,18 +85,18 @@ export default function RegisterScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Text style={{ color: Colors.secondary, fontSize: 18 }}>←</Text>
+          <Ionicons name="arrow-back" size={20} color={Colors.secondary} />
           <Text style={styles.backText}>{t('back')}</Text>
         </TouchableOpacity>
 
         <Text style={styles.title}>{t('registerTitle')}</Text>
         <Text style={styles.subtitle}>{t('registerSubtitle')}</Text>
 
-        <Field label={t('name')}     fieldName="name"            placeholder="Seu nome completo" autoCapitalize="words" required />
-        <Field label={t('email')}    fieldName="email"           placeholder="seu@email.com"     keyboardType="email-address" required />
-        <Field label={t('phone')}    fieldName="phone"           placeholder="(27) 99999-9999"   keyboardType="phone-pad" required />
-        <Field label={t('password')} fieldName="password"        placeholder="••••••••"          secureTextEntry required />
-        <Field label={t('confirmPassword')} fieldName="confirmPassword" placeholder="••••••••"  secureTextEntry required />
+        <Field label={t('name')}            fieldName="name"            placeholder="Seu nome completo" autoCapitalize="words" required />
+        <Field label={t('email')}           fieldName="email"           placeholder="seu@email.com"     keyboardType="email-address" required />
+        <Field label={t('phone')}           fieldName="phone"           placeholder="(27) 99999-9999"   keyboardType="phone-pad" required />
+        <Field label={t('password')}        fieldName="password"        placeholder="••••••••"          secureTextEntry required />
+        <Field label={t('confirmPassword')} fieldName="confirmPassword" placeholder="••••••••"          secureTextEntry required />
 
         <TouchableOpacity
           style={[styles.button, loading && styles.buttonDisabled]}
