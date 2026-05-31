@@ -89,4 +89,24 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 4,
   },
+  banner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    marginTop: 20,
+  },
+  bannerSuccess: {
+    backgroundColor: Colors.success,
+  },
+  bannerError: {
+    backgroundColor: Colors.error,
+  },
+  bannerText: {
+    color: Colors.white,
+    fontSize: 14,
+    marginLeft: 8,
+    flexShrink: 1,
+  },
 });

@@ -5,7 +5,6 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Alert,
   ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -59,6 +58,7 @@ export default function RegisterScreen({ navigation }) {
   const { register } = useAuth();
   const { t } = useLanguage();
   const [loading, setLoading] = useState(false);
+  const [feedback, setFeedback] = useState(null);
 
   const {
     control,
@@ -72,14 +72,14 @@ export default function RegisterScreen({ navigation }) {
   const passwordValue = watch('password');
 
   async function onSubmit({ email, password, name, phone }) {
+    setFeedback(null);
     setLoading(true);
     try {
       await register(email, password, name, phone);
-      Alert.alert(t('success'), 'Conta criada. Verifique seu e-mail.', [
-        { text: 'OK', onPress: () => navigation.navigate('Login') },
-      ]);
+      setFeedback({ type: 'success', text: 'Conta criada! Verifique seu e-mail para confirmar.' });
+      setTimeout(() => navigation.navigate('Login'), 2500);
     } catch (err) {
-      Alert.alert(t('error'), err.message);
+      setFeedback({ type: 'error', text: err.message });
     } finally {
       setLoading(false);
     }
@@ -149,6 +149,17 @@ export default function RegisterScreen({ navigation }) {
           }}
           required
         />
+
+        {feedback && (
+          <View style={[styles.banner, feedback.type === 'success' ? styles.bannerSuccess : styles.bannerError]}>
+            <Ionicons
+              name={feedback.type === 'success' ? 'checkmark-circle' : 'alert-circle'}
+              size={18}
+              color={Colors.white}
+            />
+            <Text style={styles.bannerText}>{feedback.text}</Text>
+          </View>
+        )}
 
         <TouchableOpacity
           style={[styles.button, loading && styles.buttonDisabled]}

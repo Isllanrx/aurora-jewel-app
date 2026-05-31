@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
-  Alert,
   ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -23,20 +22,22 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export default function LoginScreen({ navigation }) {
   const { login } = useAuth();
   const { t } = useLanguage();
-  const [loading,   setLoading]   = useState(false);
+  const [loading, setLoading] = useState(false);
   const [logoError, setLogoError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: { email: '', password: '' },
   });
 
   async function onSubmit({ email, password }) {
+    setErrorMsg(null);
     setLoading(true);
     try {
       await login(email, password);
       navigation.replace('Main');
     } catch (err) {
-      Alert.alert(t('error'), err.message);
+      setErrorMsg(err.message);
     } finally {
       setLoading(false);
     }
@@ -109,6 +110,13 @@ export default function LoginScreen({ navigation }) {
           )}
         />
         {errors.password && <Text style={styles.errorText}>{errors.password.message}</Text>}
+
+        {errorMsg && (
+          <View style={styles.banner}>
+            <Ionicons name="alert-circle" size={18} color={Colors.white} />
+            <Text style={styles.bannerText}>{errorMsg}</Text>
+          </View>
+        )}
 
         <TouchableOpacity
           style={[styles.button, loading && styles.buttonDisabled]}
