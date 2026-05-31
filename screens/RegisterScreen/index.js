@@ -17,7 +17,43 @@ import styles from './styles';
 import { Colors } from '../../lib/colors';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PHONE_REGEX = /^\(\d{2}\)\s?\d{4,5}-\d{4}$/;
+
+function validatePhone(value) {
+  const digits = value.replace(/\D/g, '');
+  return (digits.length === 10 || digits.length === 11) || 'Telefone inválido';
+}
+
+function Field({ control, errors, name, label, placeholder, keyboardType, secureTextEntry, autoCapitalize, rules, required }) {
+  return (
+    <>
+      <Text style={styles.label}>
+        {label}
+        {required && <Text style={styles.required}> *</Text>}
+      </Text>
+      <Controller
+        control={control}
+        name={name}
+        rules={rules}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            style={[styles.input, errors[name] && styles.inputError]}
+            placeholder={placeholder}
+            placeholderTextColor={Colors.textMuted}
+            keyboardType={keyboardType}
+            secureTextEntry={secureTextEntry}
+            autoCapitalize={autoCapitalize ?? 'none'}
+            value={value}
+            onChangeText={onChange}
+            onBlur={onBlur}
+          />
+        )}
+      />
+      {errors[name] && (
+        <Text style={styles.errorText}>{errors[name].message}</Text>
+      )}
+    </>
+  );
+}
 
 export default function RegisterScreen({ navigation }) {
   const { register } = useAuth();
@@ -49,38 +85,6 @@ export default function RegisterScreen({ navigation }) {
     }
   }
 
-  function Field({ name, label, placeholder, keyboardType, secureTextEntry, autoCapitalize, rules, required }) {
-    return (
-      <>
-        <Text style={styles.label}>
-          {label}
-          {required && <Text style={styles.required}> *</Text>}
-        </Text>
-        <Controller
-          control={control}
-          name={name}
-          rules={rules}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={[styles.input, errors[name] && styles.inputError]}
-              placeholder={placeholder}
-              placeholderTextColor={Colors.textMuted}
-              keyboardType={keyboardType}
-              secureTextEntry={secureTextEntry}
-              autoCapitalize={autoCapitalize ?? 'none'}
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-            />
-          )}
-        />
-        {errors[name] && (
-          <Text style={styles.errorText}>{errors[name].message}</Text>
-        )}
-      </>
-    );
-  }
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
@@ -93,6 +97,8 @@ export default function RegisterScreen({ navigation }) {
         <Text style={styles.subtitle}>{t('registerSubtitle')}</Text>
 
         <Field
+          control={control}
+          errors={errors}
           name="name"
           label={t('name')}
           placeholder="Seu nome completo"
@@ -101,6 +107,8 @@ export default function RegisterScreen({ navigation }) {
           required
         />
         <Field
+          control={control}
+          errors={errors}
           name="email"
           label={t('email')}
           placeholder="seu@email.com"
@@ -109,14 +117,18 @@ export default function RegisterScreen({ navigation }) {
           required
         />
         <Field
+          control={control}
+          errors={errors}
           name="phone"
           label={t('phone')}
           placeholder="(27) 99999-9999"
           keyboardType="phone-pad"
-          rules={{ required: t('required'), pattern: { value: PHONE_REGEX, message: t('phoneInvalid') } }}
+          rules={{ required: t('required'), validate: validatePhone }}
           required
         />
         <Field
+          control={control}
+          errors={errors}
           name="password"
           label={t('password')}
           placeholder="••••••••"
@@ -125,6 +137,8 @@ export default function RegisterScreen({ navigation }) {
           required
         />
         <Field
+          control={control}
+          errors={errors}
           name="confirmPassword"
           label={t('confirmPassword')}
           placeholder="••••••••"
