@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Images } from '../../lib/assets';
 import styles from './styles';
 import { Colors } from '../../lib/colors';
 
-const AVATAR_IMAGES = [
-  require('../../assets/pic-1.png'),
-  require('../../assets/pic-2.png'),
-  require('../../assets/pic-3.png'),
-];
+const AVATAR_IMAGES = [Images.pic1, Images.pic2, Images.pic3];
 
 export default function TestimonialCard({ testimonial, index = 0 }) {
   const { user_name, review, rating, avatar_url } = testimonial;

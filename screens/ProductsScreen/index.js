@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Picker } from '@react-native-picker/picker';
 import { Ionicons } from '@expo/vector-icons';
 import { dbSelect } from '../../lib/supabase';
+import { Images } from '../../lib/assets';
 import { useLanguage } from '../../contexts/LanguageContext';
 import ProductCard from '../../components/ProductCard';
 import styles from './styles';
@@ -25,9 +26,9 @@ const LOCAL_PRODUCTS = [
 ];
 
 const CATEGORY_IMAGES = {
-  relogio: require('../../assets/relogio.png'),
-  anel:    require('../../assets/anel.png'),
-  cordao:  require('../../assets/cordao.png'),
+  relogio: Images.relogio,
+  anel:    Images.anel,
+  cordao:  Images.cordao,
 };
 
 export default function ProductsScreen({ navigation, route }) {

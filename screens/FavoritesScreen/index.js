@@ -9,6 +9,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { dbSelect } from '../../lib/supabase';
+import { Images } from '../../lib/assets';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import ProductCard from '../../components/ProductCard';
@@ -16,9 +17,9 @@ import styles from './styles';
 import { Colors } from '../../lib/colors';
 
 const CATEGORY_IMAGES = {
-  relogio: require('../../assets/relogio.png'),
-  anel:    require('../../assets/anel.png'),
-  cordao:  require('../../assets/cordao.png'),
+  relogio: Images.relogio,
+  anel:    Images.anel,
+  cordao:  Images.cordao,
 };
 
 export default function FavoritesScreen({ navigation }) {

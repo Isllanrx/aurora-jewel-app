@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useCart } from '../../contexts/CartContext';
+import { Images } from '../../lib/assets';
 import styles from './styles';
 import { Colors } from '../../lib/colors';
 
@@ -12,9 +13,9 @@ const CATEGORY_ICONS = {
 };
 
 const CATEGORY_IMAGES = {
-  relogio: require('../../assets/relogio.png'),
-  anel:    require('../../assets/anel.png'),
-  cordao:  require('../../assets/cordao.png'),
+  relogio: Images.relogio,
+  anel:    Images.anel,
+  cordao:  Images.cordao,
 };
 
 export default function CartItem({ item }) {

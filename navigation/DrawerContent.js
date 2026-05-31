@@ -10,6 +10,7 @@ import {
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../lib/colors';
+import { Images } from '../lib/assets';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useCart } from '../contexts/CartContext';
@@ -48,7 +49,7 @@ export default function DrawerContent(props) {
           </View>
         ) : (
           <Image
-            source={require('../assets/logo_joias.png')}
+            source={Images.logo}
             style={styles.logo}
             resizeMode="contain"
             onError={() => setLogoError(true)}

@@ -12,6 +12,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useFormik } from 'formik';
+import { Images } from '../../lib/assets';
 import * as Yup from 'yup';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -59,7 +60,7 @@ export default function LoginScreen({ navigation }) {
             </View>
           ) : (
             <Image
-              source={require('../../assets/logo_joias.png')}
+              source={Images.logo}
               style={styles.logo}
               resizeMode="contain"
               onError={() => setLogoError(true)}

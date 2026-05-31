@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { Images } from '../../lib/assets';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useCart } from '../../contexts/CartContext';
 import styles from './styles';
@@ -72,7 +73,7 @@ export default function HomeScreen({ navigation }) {
             </View>
           ) : (
             <Image
-              source={require('../../assets/orient_banner-removebg-preview.png')}
+              source={Images.banner}
               style={styles.heroImage}
               resizeMode="contain"
               onError={() => setBannerError(true)}
