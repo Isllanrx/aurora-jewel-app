@@ -1,0 +1,44 @@
+# Gemini CLI Ignore Patterns
+# Use this file to exclude noise and keep the agent focused.
+
+# Dependencies & Build Artifacts
+node_modules/
+.next/
+out/
+build/
+dist/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment & Secrets
+.env
+.env.*
+!.env.example
+
+# Version Control
+.git/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Large Assets (Optional, but recommended for context efficiency)
+public/assets/
+public/*.png
+public/*.jpg
+public/*.svg
+public/*.webp
+
+# IDE/Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project specific
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
