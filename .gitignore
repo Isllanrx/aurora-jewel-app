@@ -28,3 +28,7 @@ yarn-error.log*
 
 # Next.js leftovers (not used in Expo project)
 public/
+
+# Binary image assets — servidos via GitHub raw URL (lib/assets.js)
+# Mantidos localmente apenas para desenvolvimento; não commitar.
+assets/
