@@ -30,5 +30,11 @@ yarn-error.log*
 public/
 
 # Binary image assets — servidos via GitHub raw URL (lib/assets.js)
-# Mantidos localmente apenas para desenvolvimento; não commitar.
 assets/
+
+# AI agent config files — usados localmente, não necessários no Snack
+.claudeignore
+.geminiignore
+
+# SQL schema — ferramenta de desenvolvimento, não necessário no Snack
+supabase_schema.sql
