@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { dbSelect } from '../../lib/supabase';
+import { dbSelect, dbRpc } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import styles from './styles';
@@ -35,8 +35,10 @@ export default function DashboardScreen({ navigation }) {
   async function fetchStats() {
     setLoading(true);
     try {
-      const products = await dbSelect('products');
-      const profiles = await dbSelect('profiles', {}, token);
+      const [products, userCount] = await Promise.all([
+        dbSelect('products'),
+        dbRpc('get_user_count'),
+      ]);
 
       const catMap = {};
       for (const p of products) {
@@ -50,7 +52,7 @@ export default function DashboardScreen({ navigation }) {
       }));
 
       setStats({
-        totalUsers:    profiles.length,
+        totalUsers:    Number(userCount) || 0,
         totalProducts: products.length,
         byCategory,
       });
