@@ -10,72 +10,72 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { useForm, Controller } from 'react-hook-form';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import styles from './styles';
 import { Colors } from '../../lib/colors';
 
-function buildSchema(t) {
-  return Yup.object({
-    name:  Yup.string().min(2).required(t('required')),
-    email: Yup.string().email(t('invalidEmail')).required(t('required')),
-    phone: Yup.string()
-      .matches(/^\(\d{2}\)\s?\d{4,5}-\d{4}$/, t('phoneInvalid'))
-      .required(t('required')),
-    password:        Yup.string().min(6, t('passwordMin')).required(t('required')),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password')], t('passwordMatch'))
-      .required(t('required')),
-  });
-}
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_REGEX = /^\(\d{2}\)\s?\d{4,5}-\d{4}$/;
 
 export default function RegisterScreen({ navigation }) {
   const { register } = useAuth();
   const { t } = useLanguage();
   const [loading, setLoading] = useState(false);
 
-  const formik = useFormik({
-    initialValues: { name: '', email: '', phone: '', password: '', confirmPassword: '' },
-    validationSchema: buildSchema(t),
-    onSubmit: async ({ email, password, name, phone }) => {
-      setLoading(true);
-      try {
-        await register(email, password, name, phone);
-        Alert.alert(t('success'), 'Conta criada. Verifique seu e-mail.', [
-          { text: 'OK', onPress: () => navigation.navigate('Login') },
-        ]);
-      } catch (err) {
-        Alert.alert(t('error'), err.message);
-      } finally {
-        setLoading(false);
-      }
-    },
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: { name: '', email: '', phone: '', password: '', confirmPassword: '' },
   });
 
-  const { handleChange, handleBlur, handleSubmit, values, errors, touched } = formik;
+  const passwordValue = watch('password');
 
-  function Field({ label, fieldName, placeholder, keyboardType, secureTextEntry, autoCapitalize, required }) {
+  async function onSubmit({ email, password, name, phone }) {
+    setLoading(true);
+    try {
+      await register(email, password, name, phone);
+      Alert.alert(t('success'), 'Conta criada. Verifique seu e-mail.', [
+        { text: 'OK', onPress: () => navigation.navigate('Login') },
+      ]);
+    } catch (err) {
+      Alert.alert(t('error'), err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function Field({ name, label, placeholder, keyboardType, secureTextEntry, autoCapitalize, rules, required }) {
     return (
       <>
         <Text style={styles.label}>
           {label}
           {required && <Text style={styles.required}> *</Text>}
         </Text>
-        <TextInput
-          style={[styles.input, touched[fieldName] && errors[fieldName] && styles.inputError]}
-          placeholder={placeholder}
-          placeholderTextColor={Colors.textMuted}
-          keyboardType={keyboardType}
-          secureTextEntry={secureTextEntry}
-          autoCapitalize={autoCapitalize ?? 'none'}
-          value={values[fieldName]}
-          onChangeText={handleChange(fieldName)}
-          onBlur={handleBlur(fieldName)}
+        <Controller
+          control={control}
+          name={name}
+          rules={rules}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={[styles.input, errors[name] && styles.inputError]}
+              placeholder={placeholder}
+              placeholderTextColor={Colors.textMuted}
+              keyboardType={keyboardType}
+              secureTextEntry={secureTextEntry}
+              autoCapitalize={autoCapitalize ?? 'none'}
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+            />
+          )}
         />
-        {touched[fieldName] && errors[fieldName] && (
-          <Text style={styles.errorText}>{errors[fieldName]}</Text>
+        {errors[name] && (
+          <Text style={styles.errorText}>{errors[name].message}</Text>
         )}
       </>
     );
@@ -92,15 +92,53 @@ export default function RegisterScreen({ navigation }) {
         <Text style={styles.title}>{t('registerTitle')}</Text>
         <Text style={styles.subtitle}>{t('registerSubtitle')}</Text>
 
-        <Field label={t('name')}            fieldName="name"            placeholder="Seu nome completo" autoCapitalize="words" required />
-        <Field label={t('email')}           fieldName="email"           placeholder="seu@email.com"     keyboardType="email-address" required />
-        <Field label={t('phone')}           fieldName="phone"           placeholder="(27) 99999-9999"   keyboardType="phone-pad" required />
-        <Field label={t('password')}        fieldName="password"        placeholder="••••••••"          secureTextEntry required />
-        <Field label={t('confirmPassword')} fieldName="confirmPassword" placeholder="••••••••"          secureTextEntry required />
+        <Field
+          name="name"
+          label={t('name')}
+          placeholder="Seu nome completo"
+          autoCapitalize="words"
+          rules={{ required: t('required'), minLength: { value: 2, message: 'Mínimo 2 caracteres' } }}
+          required
+        />
+        <Field
+          name="email"
+          label={t('email')}
+          placeholder="seu@email.com"
+          keyboardType="email-address"
+          rules={{ required: t('required'), pattern: { value: EMAIL_REGEX, message: t('invalidEmail') } }}
+          required
+        />
+        <Field
+          name="phone"
+          label={t('phone')}
+          placeholder="(27) 99999-9999"
+          keyboardType="phone-pad"
+          rules={{ required: t('required'), pattern: { value: PHONE_REGEX, message: t('phoneInvalid') } }}
+          required
+        />
+        <Field
+          name="password"
+          label={t('password')}
+          placeholder="••••••••"
+          secureTextEntry
+          rules={{ required: t('required'), minLength: { value: 6, message: t('passwordMin') } }}
+          required
+        />
+        <Field
+          name="confirmPassword"
+          label={t('confirmPassword')}
+          placeholder="••••••••"
+          secureTextEntry
+          rules={{
+            required: t('required'),
+            validate: v => v === passwordValue || t('passwordMatch'),
+          }}
+          required
+        />
 
         <TouchableOpacity
           style={[styles.button, loading && styles.buttonDisabled]}
-          onPress={handleSubmit}
+          onPress={handleSubmit(onSubmit)}
           disabled={loading}
           activeOpacity={0.8}
         >

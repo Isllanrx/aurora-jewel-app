@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -28,19 +28,13 @@ export default function FavoritesScreen({ navigation }) {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    if (user) fetchFavorites();
-    else setLoading(false);
-  }, [user]);
-
-  async function fetchFavorites() {
+  const fetchFavorites = useCallback(async () => {
+    if (!user) { setLoading(false); return; }
     setLoading(true);
     try {
       const rows = await dbSelect('favorites', { 'user_id': `eq.${user.id}` }, token);
       const productIds = rows.map(r => r.product_id);
       if (productIds.length === 0) { setFavorites([]); return; }
-
       const products = await dbSelect(
         'products',
         { 'id': `in.(${productIds.join(',')})` },
@@ -53,7 +47,9 @@ export default function FavoritesScreen({ navigation }) {
     } finally {
       setLoading(false);
     }
-  }
+  }, [user, token]);
+
+  useEffect(() => { fetchFavorites(); }, [fetchFavorites]);
 
   function getImage(product) {
     if (product.image_url) return { uri: product.image_url };

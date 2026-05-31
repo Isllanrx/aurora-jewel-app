@@ -11,20 +11,14 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useFormik } from 'formik';
-import { Images } from '../../lib/assets';
-import * as Yup from 'yup';
+import { useForm, Controller } from 'react-hook-form';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { Images } from '../../lib/assets';
 import styles from './styles';
 import { Colors } from '../../lib/colors';
 
-function buildSchema(t) {
-  return Yup.object({
-    email:    Yup.string().email(t('invalidEmail')).required(t('required')),
-    password: Yup.string().min(6, t('passwordMin')).required(t('required')),
-  });
-}
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function LoginScreen({ navigation }) {
   const { login } = useAuth();
@@ -32,23 +26,21 @@ export default function LoginScreen({ navigation }) {
   const [loading,   setLoading]   = useState(false);
   const [logoError, setLogoError] = useState(false);
 
-  const formik = useFormik({
-    initialValues: { email: '', password: '' },
-    validationSchema: buildSchema(t),
-    onSubmit: async ({ email, password }) => {
-      setLoading(true);
-      try {
-        await login(email, password);
-        navigation.replace('Main');
-      } catch (err) {
-        Alert.alert(t('error'), err.message);
-      } finally {
-        setLoading(false);
-      }
-    },
+  const { control, handleSubmit, formState: { errors } } = useForm({
+    defaultValues: { email: '', password: '' },
   });
 
-  const { handleChange, handleBlur, handleSubmit, values, errors, touched } = formik;
+  async function onSubmit({ email, password }) {
+    setLoading(true);
+    try {
+      await login(email, password);
+      navigation.replace('Main');
+    } catch (err) {
+      Alert.alert(t('error'), err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -74,37 +66,53 @@ export default function LoginScreen({ navigation }) {
         <Text style={styles.subtitle}>{t('loginSubtitle')}</Text>
 
         <Text style={styles.label}>{t('email')}</Text>
-        <TextInput
-          style={[styles.input, touched.email && errors.email && styles.inputError]}
-          placeholder="seu@email.com"
-          placeholderTextColor={Colors.textMuted}
-          autoCapitalize="none"
-          keyboardType="email-address"
-          value={values.email}
-          onChangeText={handleChange('email')}
-          onBlur={handleBlur('email')}
+        <Controller
+          control={control}
+          name="email"
+          rules={{
+            required: t('required'),
+            pattern: { value: EMAIL_REGEX, message: t('invalidEmail') },
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={[styles.input, errors.email && styles.inputError]}
+              placeholder="seu@email.com"
+              placeholderTextColor={Colors.textMuted}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+            />
+          )}
         />
-        {touched.email && errors.email && (
-          <Text style={styles.errorText}>{errors.email}</Text>
-        )}
+        {errors.email && <Text style={styles.errorText}>{errors.email.message}</Text>}
 
         <Text style={styles.label}>{t('password')}</Text>
-        <TextInput
-          style={[styles.input, touched.password && errors.password && styles.inputError]}
-          placeholder="••••••••"
-          placeholderTextColor={Colors.textMuted}
-          secureTextEntry
-          value={values.password}
-          onChangeText={handleChange('password')}
-          onBlur={handleBlur('password')}
+        <Controller
+          control={control}
+          name="password"
+          rules={{
+            required: t('required'),
+            minLength: { value: 6, message: t('passwordMin') },
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={[styles.input, errors.password && styles.inputError]}
+              placeholder="••••••••"
+              placeholderTextColor={Colors.textMuted}
+              secureTextEntry
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+            />
+          )}
         />
-        {touched.password && errors.password && (
-          <Text style={styles.errorText}>{errors.password}</Text>
-        )}
+        {errors.password && <Text style={styles.errorText}>{errors.password.message}</Text>}
 
         <TouchableOpacity
           style={[styles.button, loading && styles.buttonDisabled]}
-          onPress={handleSubmit}
+          onPress={handleSubmit(onSubmit)}
           disabled={loading}
           activeOpacity={0.8}
         >

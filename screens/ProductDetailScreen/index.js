@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -29,12 +29,8 @@ export default function ProductDetailScreen({ navigation, route }) {
   const [isFav,      setIsFav]      = useState(false);
   const [favLoading, setFavLoading] = useState(false);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    if (user) loadFavoriteStatus();
-  }, [user]);
-
-  async function loadFavoriteStatus() {
+  const loadFavoriteStatus = useCallback(async () => {
+    if (!user) return;
     try {
       const rows = await dbSelect(
         'favorites',
@@ -45,7 +41,9 @@ export default function ProductDetailScreen({ navigation, route }) {
     } catch {
       // default false
     }
-  }
+  }, [user, product.id, token]);
+
+  useEffect(() => { loadFavoriteStatus(); }, [loadFavoriteStatus]);
 
   async function addFavorite() {
     await dbInsert('favorites', { user_id: user.id, product_id: product.id }, token);
