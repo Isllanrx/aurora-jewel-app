@@ -1,7 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Alert, FlatList, Platform, Text, TouchableOpacity, View } from "react-native";
+import { useState } from "react";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CartItem from "../../components/CartItem";
+import CustomAlert from "../../components/CustomAlert";
 import { useCart } from "../../contexts/CartContext";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { Colors } from "../../lib/colors";
@@ -11,37 +13,26 @@ export default function CartScreen({ navigation }) {
   const { cartItems, clearCart, getTotalPrice } = useCart();
   const { t } = useLanguage();
 
-  function handleCheckout() {
-    const msg = t("orderSuccess");
+  const [clearAlert, setClearAlert] = useState(false);
+  const [successAlert, setSuccessAlert] = useState(false);
 
-    if (Platform.OS === "web") {
-      window.alert(msg);
-      clearCart();
-      navigation.navigate("Home");
-    } else {
-      Alert.alert(t("success"), msg, [
-        {
-          text: "OK",
-          onPress: () => {
-            clearCart();
-            navigation.navigate("Home");
-          },
-        },
-      ]);
-    }
+  function handleCheckout() {
+    setSuccessAlert(true);
+  }
+
+  function onCheckoutDone() {
+    setSuccessAlert(false);
+    clearCart();
+    navigation.navigate("Home");
   }
 
   function handleClear() {
-    if (Platform.OS === "web") {
-      if (window.confirm(t("clearCartMsg"))) {
-        clearCart();
-      }
-    } else {
-      Alert.alert(t("clearCartTitle"), t("clearCartMsg"), [
-        { text: t("cancel"), style: "cancel" },
-        { text: t("remove"), style: "destructive", onPress: clearCart },
-      ]);
-    }
+    setClearAlert(true);
+  }
+
+  function onConfirmClear() {
+    setClearAlert(false);
+    clearCart();
   }
 
   return (
@@ -88,6 +79,25 @@ export default function CartScreen({ navigation }) {
           </View>
         </>
       )}
+
+      <CustomAlert
+        visible={clearAlert}
+        title={t("clearCartTitle")}
+        message={t("clearCartMsg")}
+        onClose={() => setClearAlert(false)}
+        onConfirm={onConfirmClear}
+        confirmText={t("remove")}
+        cancelText={t("cancel")}
+        isDestructive
+      />
+
+      <CustomAlert
+        visible={successAlert}
+        title={t("success")}
+        message={t("orderSuccess")}
+        onClose={onCheckoutDone}
+        confirmText="OK"
+      />
     </SafeAreaView>
   );
 }

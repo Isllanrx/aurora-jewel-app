@@ -1,8 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Image, Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CategoryBadge from "../../components/CategoryBadge";
+import CustomAlert from "../../components/CustomAlert";
 import { useAuth } from "../../contexts/AuthContext";
 import { useCart } from "../../contexts/CartContext";
 import { useLanguage } from "../../contexts/LanguageContext";
@@ -20,6 +21,7 @@ export default function ProductDetailScreen({ navigation, route }) {
   const [imgError, setImgError] = useState(false);
   const [isFav, setIsFav] = useState(false);
   const [favLoading, setFavLoading] = useState(false);
+  const [loginAlert, setLoginAlert] = useState(false);
 
   useEffect(() => {
     async function loadFavoriteStatus() {
@@ -46,13 +48,7 @@ export default function ProductDetailScreen({ navigation, route }) {
 
   async function handleFavToggle() {
     if (!user) {
-      const title = t("loginRequired");
-      const msg = t("loginRequiredMsg");
-      if (Platform.OS === "web") {
-        window.alert(`${title}: ${msg}`);
-      } else {
-        Alert.alert(title, msg);
-      }
+      setLoginAlert(true);
       return;
     }
     setFavLoading(true);
@@ -133,6 +129,14 @@ export default function ProductDetailScreen({ navigation, route }) {
           <Text style={styles.addButtonText}>{added ? t("addedToCart") : t("addToCart")}</Text>
         </TouchableOpacity>
       </View>
+
+      <CustomAlert
+        visible={loginAlert}
+        title={t("loginRequired")}
+        message={t("loginRequiredMsg")}
+        onClose={() => setLoginAlert(false)}
+        confirmText="OK"
+      />
     </SafeAreaView>
   );
 }

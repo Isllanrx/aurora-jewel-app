@@ -1,7 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import CustomAlert from "../../components/CustomAlert";
 import { useAuth } from "../../contexts/AuthContext";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { Colors } from "../../lib/colors";
@@ -15,6 +16,7 @@ export default function ProfileScreen({ navigation }) {
   const [saving, setSaving] = useState(false);
   const [name, setName] = useState(user?.user_metadata?.name ?? "");
   const [phone, setPhone] = useState(user?.user_metadata?.phone ?? "");
+  const [logoutAlert, setLogoutAlert] = useState(false);
 
   async function fetchProfile() {
     if (!user) return;
@@ -60,24 +62,13 @@ export default function ProfileScreen({ navigation }) {
   }
 
   async function handleLogout() {
-    if (Platform.OS === "web") {
-      if (window.confirm(t("logoutConfirmMsg"))) {
-        await logout();
-        navigation.replace("Login");
-      }
-    } else {
-      Alert.alert(t("logout"), t("logoutConfirmMsg"), [
-        { text: t("cancel"), style: "cancel" },
-        {
-          text: t("logout"),
-          style: "destructive",
-          onPress: async () => {
-            await logout();
-            navigation.replace("Login");
-          },
-        },
-      ]);
-    }
+    setLogoutAlert(true);
+  }
+
+  async function onConfirmLogout() {
+    setLogoutAlert(false);
+    await logout();
+    navigation.replace("Login");
   }
 
   return (
@@ -145,6 +136,17 @@ export default function ProfileScreen({ navigation }) {
           )}
         </View>
       </ScrollView>
+
+      <CustomAlert
+        visible={logoutAlert}
+        title={t("logout")}
+        message={t("logoutConfirmMsg")}
+        onClose={() => setLogoutAlert(false)}
+        onConfirm={onConfirmLogout}
+        confirmText={t("logout")}
+        cancelText={t("cancel")}
+        isDestructive
+      />
     </SafeAreaView>
   );
 }
