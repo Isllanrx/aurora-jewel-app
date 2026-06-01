@@ -5,6 +5,8 @@ import {
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
+  Modal,
+  Platform,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Picker } from '@react-native-picker/picker';
@@ -37,6 +39,16 @@ export default function ProductsScreen({ navigation, route }) {
   const [filtered, setFiltered] = useState([]);
   const [category, setCategory] = useState(route.params?.category ?? 'all');
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+
+  const CATEGORIES = [
+    { label: t('allCategories'), value: 'all'     },
+    { label: t('watches'),       value: 'relogio'  },
+    { label: t('rings'),         value: 'anel'     },
+    { label: t('necklaces'),     value: 'cordao'   },
+  ];
+
+  const selectedLabel = CATEGORIES.find(c => c.value === category)?.label ?? t('allCategories');
 
   useEffect(() => {
     const cat = route.params?.category;
@@ -93,39 +105,75 @@ export default function ProductsScreen({ navigation, route }) {
 
       <View style={styles.filterRow}>
         <Text style={styles.filterLabel}>{t('filterCategory')}</Text>
-        <View style={styles.pickerWrapper}>
-          <Picker
-            selectedValue={category}
-            onValueChange={val => setCategory(val)}
-            style={styles.picker}
-            dropdownIconColor={Colors.secondary}
-          >
-            <Picker.Item
-              label={t('allCategories')}
-              value="all"
-              color={Colors.text}
-              style={styles.pickerItem}
-            />
-            <Picker.Item
-              label={t('watches')}
-              value="relogio"
-              color={Colors.text}
-              style={styles.pickerItem}
-            />
-            <Picker.Item
-              label={t('rings')}
-              value="anel"
-              color={Colors.text}
-              style={styles.pickerItem}
-            />
-            <Picker.Item
-              label={t('necklaces')}
-              value="cordao"
-              color={Colors.text}
-              style={styles.pickerItem}
-            />
-          </Picker>
-        </View>
+
+        {Platform.OS === 'web' ? (
+          /* Web: picker customizado com Modal para seguir o design */
+          <>
+            <TouchableOpacity
+              style={styles.webPickerBtn}
+              onPress={() => setShowModal(true)}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.webPickerText}>{selectedLabel}</Text>
+              <Ionicons name="chevron-down" size={16} color={Colors.secondary} />
+            </TouchableOpacity>
+
+            <Modal
+              visible={showModal}
+              transparent
+              animationType="fade"
+              onRequestClose={() => setShowModal(false)}
+            >
+              <TouchableOpacity
+                style={styles.modalOverlay}
+                activeOpacity={1}
+                onPress={() => setShowModal(false)}
+              >
+                <View style={styles.modalContent}>
+                  <Text style={styles.modalTitle}>{t('filterCategory')}</Text>
+                  {CATEGORIES.map(({ label, value }) => {
+                    const isActive = category === value;
+                    return (
+                      <TouchableOpacity
+                        key={value}
+                        style={[styles.modalOption, isActive && styles.modalOptionActive]}
+                        onPress={() => { setCategory(value); setShowModal(false); }}
+                        activeOpacity={0.7}
+                      >
+                        <Text style={[styles.modalOptionText, isActive && styles.modalOptionTextActive]}>
+                          {label}
+                        </Text>
+                        {isActive && (
+                          <Ionicons name="checkmark-circle" size={18} color={Colors.primary} />
+                        )}
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              </TouchableOpacity>
+            </Modal>
+          </>
+        ) : (
+          /* iOS / Android: RNPicker nativo */
+          <View style={styles.pickerWrapper}>
+            <Picker
+              selectedValue={category}
+              onValueChange={val => setCategory(val)}
+              style={styles.picker}
+              dropdownIconColor={Colors.secondary}
+            >
+              {CATEGORIES.map(({ label, value }) => (
+                <Picker.Item
+                  key={value}
+                  label={label}
+                  value={value}
+                  color={Colors.text}
+                  style={styles.pickerItem}
+                />
+              ))}
+            </Picker>
+          </View>
+        )}
       </View>
 
       <FlatList
