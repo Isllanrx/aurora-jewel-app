@@ -1,61 +1,73 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  ActivityIndicator,
-  Modal,
-  Platform,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Picker } from '@react-native-picker/picker';
-import { Ionicons } from '@expo/vector-icons';
-import { dbSelect } from '../../lib/supabase';
-import { Images } from '../../lib/assets';
-import { useLanguage } from '../../contexts/LanguageContext';
-import ProductCard from '../../components/ProductCard';
-import styles from './styles';
-import { Colors } from '../../lib/colors';
+import { Ionicons } from "@expo/vector-icons";
+import { Picker } from "@react-native-picker/picker";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, FlatList, Modal, Platform, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import ProductCard from "../../components/ProductCard";
+import { useLanguage } from "../../contexts/LanguageContext";
+import { Images } from "../../lib/assets";
+import { Colors } from "../../lib/colors";
+import { dbSelect } from "../../lib/supabase";
+import styles from "./styles";
 
 const LOCAL_PRODUCTS = [
-  { id: '1', name: 'Relógio Orient SolarTech', price: 1599, original_price: 1999, image_url: null, category: 'relogio', badge: '-20%',  description: 'Tecnologia solar avançada com 5 anos de garantia.' },
-  { id: '2', name: 'Anel Pandora Signature',   price: 4600, original_price: 5800, image_url: null, category: 'anel',    badge: 'Novo',   description: 'Anel em prata esterlina com acabamento em ouro rosé.' },
-  { id: '3', name: 'Cordão Swarovski Crystal', price: 13765,original_price:17200, image_url: null, category: 'cordao',  badge: '-25%',   description: 'Cristais lapidados à mão com corrente banhada a ouro.' },
-  { id: '4', name: 'Relógio Seiko Presage',    price: 3499, original_price: null, image_url: null, category: 'relogio', badge: null,     description: 'Movimento automático japonês de alta precisão.' },
-  { id: '5', name: 'Anel Pandora Timeless',    price: 568,  original_price: null, image_url: null, category: 'anel',    badge: null,     description: 'Design minimalista, perfeito para o dia a dia.' },
-  { id: '6', name: 'Cordão Vivara Gold',       price: 3000, original_price: null, image_url: null, category: 'cordao',  badge: null,     description: 'Ouro 18k com certificação de autenticidade.' },
+  {
+    id: "1",
+    name: "Relógio Orient SolarTech",
+    price: 1599,
+    original_price: 1999,
+    image_url: null,
+    category: "relogio",
+    badge: "-20%",
+    description: "Tecnologia solar avançada com 5 anos de garantia.",
+  },
+  { id: "2", name: "Anel Pandora Signature", price: 4600, original_price: 5800, image_url: null, category: "anel", badge: "Novo", description: "Anel em prata esterlina com acabamento em ouro rosé." },
+  {
+    id: "3",
+    name: "Cordão Swarovski Crystal",
+    price: 13765,
+    original_price: 17200,
+    image_url: null,
+    category: "cordao",
+    badge: "-25%",
+    description: "Cristais lapidados à mão com corrente banhada a ouro.",
+  },
+  { id: "4", name: "Relógio Seiko Presage", price: 3499, original_price: null, image_url: null, category: "relogio", badge: null, description: "Movimento automático japonês de alta precisão." },
+  { id: "5", name: "Anel Pandora Timeless", price: 568, original_price: null, image_url: null, category: "anel", badge: null, description: "Design minimalista, perfeito para o dia a dia." },
+  { id: "6", name: "Cordão Vivara Gold", price: 3000, original_price: null, image_url: null, category: "cordao", badge: null, description: "Ouro 18k com certificação de autenticidade." },
 ];
 
 const CATEGORY_IMAGES = {
   relogio: Images.relogio,
-  anel:    Images.anel,
-  cordao:  Images.cordao,
+  anel: Images.anel,
+  cordao: Images.cordao,
 };
 
 export default function ProductsScreen({ navigation, route }) {
   const { t } = useLanguage();
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
-  const [category, setCategory] = useState(route.params?.category ?? 'all');
+  const [category, setCategory] = useState(route.params?.category ?? "all");
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
   const CATEGORIES = [
-    { label: t('allCategories'), value: 'all'     },
-    { label: t('watches'),       value: 'relogio'  },
-    { label: t('rings'),         value: 'anel'     },
-    { label: t('necklaces'),     value: 'cordao'   },
+    { label: t("allCategories"), value: "all" },
+    { label: t("watches"), value: "relogio" },
+    { label: t("rings"), value: "anel" },
+    { label: t("necklaces"), value: "cordao" },
   ];
 
-  const selectedLabel = CATEGORIES.find(c => c.value === category)?.label ?? t('allCategories');
+  const selectedLabel = CATEGORIES.find((c) => c.value === category)?.label ?? t("allCategories");
 
   useEffect(() => {
     const cat = route.params?.category;
     if (cat) setCategory(cat);
   }, [route.params?.category]);
 
-  useEffect(() => { fetchProducts(); }, []);
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   useEffect(() => {
     applyFilter(category, products);
@@ -64,10 +76,10 @@ export default function ProductsScreen({ navigation, route }) {
   async function fetchProducts() {
     setLoading(true);
     try {
-      const data = await dbSelect('products');
+      const data = await dbSelect("products");
       setProducts(data.length > 0 ? data : LOCAL_PRODUCTS);
     } catch (err) {
-      console.warn('ProductsScreen fetch:', err.message);
+      console.warn("ProductsScreen fetch:", err.message);
       setProducts(LOCAL_PRODUCTS);
     } finally {
       setLoading(false);
@@ -75,7 +87,7 @@ export default function ProductsScreen({ navigation, route }) {
   }
 
   function applyFilter(cat, list) {
-    setFiltered(cat === 'all' ? list : list.filter(p => p.category === cat));
+    setFiltered(cat === "all" ? list : list.filter((p) => p.category === cat));
   }
 
   function getImage(product) {
@@ -97,55 +109,41 @@ export default function ProductsScreen({ navigation, route }) {
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Ionicons name="menu" size={24} color={Colors.text} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>{t('products')}</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+        <Text style={styles.headerTitle}>{t("products")}</Text>
+        <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
           <Ionicons name="cart-outline" size={24} color={Colors.text} />
         </TouchableOpacity>
       </View>
 
       <View style={styles.filterRow}>
-        <Text style={styles.filterLabel}>{t('filterCategory')}</Text>
+        <Text style={styles.filterLabel}>{t("filterCategory")}</Text>
 
-        {Platform.OS === 'web' ? (
+        {Platform.OS === "web" ? (
           /* Web: picker customizado com Modal para seguir o design */
           <>
-            <TouchableOpacity
-              style={styles.webPickerBtn}
-              onPress={() => setShowModal(true)}
-              activeOpacity={0.8}
-            >
+            <TouchableOpacity style={styles.webPickerBtn} onPress={() => setShowModal(true)} activeOpacity={0.8}>
               <Text style={styles.webPickerText}>{selectedLabel}</Text>
               <Ionicons name="chevron-down" size={16} color={Colors.secondary} />
             </TouchableOpacity>
 
-            <Modal
-              visible={showModal}
-              transparent
-              animationType="fade"
-              onRequestClose={() => setShowModal(false)}
-            >
-              <TouchableOpacity
-                style={styles.modalOverlay}
-                activeOpacity={1}
-                onPress={() => setShowModal(false)}
-              >
+            <Modal visible={showModal} transparent animationType="fade" onRequestClose={() => setShowModal(false)}>
+              <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={() => setShowModal(false)}>
                 <View style={styles.modalContent}>
-                  <Text style={styles.modalTitle}>{t('filterCategory')}</Text>
+                  <Text style={styles.modalTitle}>{t("filterCategory")}</Text>
                   {CATEGORIES.map(({ label, value }) => {
                     const isActive = category === value;
                     return (
                       <TouchableOpacity
                         key={value}
                         style={[styles.modalOption, isActive && styles.modalOptionActive]}
-                        onPress={() => { setCategory(value); setShowModal(false); }}
+                        onPress={() => {
+                          setCategory(value);
+                          setShowModal(false);
+                        }}
                         activeOpacity={0.7}
                       >
-                        <Text style={[styles.modalOptionText, isActive && styles.modalOptionTextActive]}>
-                          {label}
-                        </Text>
-                        {isActive && (
-                          <Ionicons name="checkmark-circle" size={18} color={Colors.primary} />
-                        )}
+                        <Text style={[styles.modalOptionText, isActive && styles.modalOptionTextActive]}>{label}</Text>
+                        {isActive && <Ionicons name="checkmark-circle" size={18} color={Colors.primary} />}
                       </TouchableOpacity>
                     );
                   })}
@@ -156,20 +154,9 @@ export default function ProductsScreen({ navigation, route }) {
         ) : (
           /* iOS / Android: RNPicker nativo */
           <View style={styles.pickerWrapper}>
-            <Picker
-              selectedValue={category}
-              onValueChange={val => setCategory(val)}
-              style={styles.picker}
-              dropdownIconColor={Colors.secondary}
-            >
+            <Picker selectedValue={category} onValueChange={(val) => setCategory(val)} style={styles.picker} dropdownIconColor={Colors.secondary}>
               {CATEGORIES.map(({ label, value }) => (
-                <Picker.Item
-                  key={value}
-                  label={label}
-                  value={value}
-                  color={Colors.text}
-                  style={styles.pickerItem}
-                />
+                <Picker.Item key={value} label={label} value={value} color={Colors.text} style={styles.pickerItem} />
               ))}
             </Picker>
           </View>
@@ -178,19 +165,17 @@ export default function ProductsScreen({ navigation, route }) {
 
       <FlatList
         data={filtered}
-        keyExtractor={item => String(item.id)}
+        keyExtractor={(item) => String(item.id)}
         numColumns={2}
         columnWrapperStyle={styles.row}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
-        ListEmptyComponent={
-          <Text style={styles.emptyText}>{t('noProducts')}</Text>
-        }
+        ListEmptyComponent={<Text style={styles.emptyText}>{t("noProducts")}</Text>}
         renderItem={({ item }) => (
           <ProductCard
             product={{ ...item, imageSource: getImage(item) }}
             onPress={() =>
-              navigation.navigate('ProductDetail', {
+              navigation.navigate("ProductDetail", {
                 product: { ...item, imageSource: getImage(item) },
               })
             }

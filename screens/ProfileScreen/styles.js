@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { Colors } from '../../lib/colors';
+import { StyleSheet } from "react-native";
+import { Colors } from "../../lib/colors";
 
 export default StyleSheet.create({
   container: {
@@ -7,18 +7,18 @@ export default StyleSheet.create({
     backgroundColor: Colors.background,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 16,
     paddingVertical: 12,
     backgroundColor: Colors.surface,
   },
   hamburgerIcon: { fontSize: 22, color: Colors.text },
-  headerTitle:   { fontSize: 18, fontWeight: 'bold', color: Colors.secondary },
+  headerTitle: { fontSize: 18, fontWeight: "bold", color: Colors.secondary },
   scroll: { padding: 16, paddingBottom: 32 },
   avatarWrapper: {
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 24,
   },
   avatar: {
@@ -26,8 +26,8 @@ export default StyleSheet.create({
     height: 88,
     borderRadius: 44,
     backgroundColor: Colors.card,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderWidth: 2,
     borderColor: Colors.primary,
     marginBottom: 12,
@@ -38,7 +38,7 @@ export default StyleSheet.create({
   },
   userName: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.text,
   },
   userEmail: {
@@ -62,8 +62,8 @@ export default StyleSheet.create({
   sectionTitle: {
     fontSize: 13,
     color: Colors.textMuted,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
+    fontWeight: "bold",
+    textTransform: "uppercase",
     letterSpacing: 0.5,
     marginBottom: 10,
     marginTop: 8,
@@ -88,7 +88,7 @@ export default StyleSheet.create({
     opacity: 0.5,
   },
   buttonRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 24,
     marginHorizontal: -5,
   },
@@ -98,18 +98,18 @@ export default StyleSheet.create({
     backgroundColor: Colors.primary,
     borderRadius: 10,
     paddingVertical: 13,
-    alignItems: 'center',
+    alignItems: "center",
   },
-  editBtnText: { color: Colors.white, fontWeight: 'bold', fontSize: 14 },
+  editBtnText: { color: Colors.white, fontWeight: "bold", fontSize: 14 },
   logoutBtn: {
     flex: 1,
     marginHorizontal: 5,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     borderRadius: 10,
     paddingVertical: 13,
-    alignItems: 'center',
+    alignItems: "center",
     borderWidth: 1,
     borderColor: Colors.error,
   },
-  logoutBtnText: { color: Colors.error, fontWeight: 'bold', fontSize: 14 },
+  logoutBtnText: { color: Colors.error, fontWeight: "bold", fontSize: 14 },
 });

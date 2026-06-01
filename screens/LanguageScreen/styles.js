@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { Colors } from '../../lib/colors';
+import { StyleSheet } from "react-native";
+import { Colors } from "../../lib/colors";
 
 export default StyleSheet.create({
   container: {
@@ -7,14 +7,14 @@ export default StyleSheet.create({
     backgroundColor: Colors.background,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 16,
     paddingVertical: 12,
     backgroundColor: Colors.surface,
   },
-  headerTitle: { fontSize: 18, fontWeight: 'bold', color: Colors.secondary },
+  headerTitle: { fontSize: 18, fontWeight: "bold", color: Colors.secondary },
   scroll: {
     padding: 24,
   },
@@ -22,40 +22,40 @@ export default StyleSheet.create({
     color: Colors.textMuted,
     fontSize: 14,
     marginBottom: 24,
-    textAlign: 'center',
+    textAlign: "center",
   },
   option: {
     backgroundColor: Colors.card,
     borderRadius: 14,
     padding: 18,
     marginBottom: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
     borderColor: Colors.border,
   },
   optionActive: {
     borderColor: Colors.primary,
-    backgroundColor: Colors.primary + '18',
+    backgroundColor: Colors.primary + "18",
   },
   langCode: {
     width: 44,
     height: 44,
     borderRadius: 8,
     backgroundColor: Colors.surface,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginRight: 14,
     borderWidth: 1,
     borderColor: Colors.border,
   },
   langCodeActive: {
-    backgroundColor: Colors.primary + '33',
+    backgroundColor: Colors.primary + "33",
     borderColor: Colors.primary,
   },
   langCodeText: {
     fontSize: 13,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.textMuted,
     letterSpacing: 0.5,
   },
@@ -64,7 +64,7 @@ export default StyleSheet.create({
   },
   langName: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
     color: Colors.text,
   },
   langNameActive: {
@@ -79,16 +79,16 @@ export default StyleSheet.create({
     backgroundColor: Colors.primary,
     borderRadius: 12,
     paddingVertical: 14,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 12,
   },
   saveBtnText: {
     color: Colors.white,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 16,
   },
   successMsg: {
-    textAlign: 'center',
+    textAlign: "center",
     color: Colors.success,
     fontSize: 14,
     marginTop: 12,

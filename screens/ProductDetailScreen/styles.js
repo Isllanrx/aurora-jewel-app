@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { Colors } from '../../lib/colors';
+import { StyleSheet } from "react-native";
+import { Colors } from "../../lib/colors";
 
 export default StyleSheet.create({
   container: {
@@ -7,9 +7,9 @@ export default StyleSheet.create({
     backgroundColor: Colors.background,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 16,
     paddingVertical: 12,
     backgroundColor: Colors.surface,
@@ -20,10 +20,10 @@ export default StyleSheet.create({
   },
   headerTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.secondary,
     flex: 1,
-    textAlign: 'center',
+    textAlign: "center",
     marginHorizontal: 8,
   },
   headerBtn: {
@@ -33,16 +33,16 @@ export default StyleSheet.create({
     backgroundColor: Colors.surface,
     margin: 16,
     borderRadius: 16,
-    overflow: 'hidden',
-    alignItems: 'center',
+    overflow: "hidden",
+    alignItems: "center",
     padding: 20,
   },
   image: {
-    width: '100%',
+    width: "100%",
     height: 240,
   },
   badge: {
-    position: 'absolute',
+    position: "absolute",
     top: 12,
     right: 12,
     backgroundColor: Colors.primary,
@@ -53,20 +53,20 @@ export default StyleSheet.create({
   badgeText: {
     color: Colors.white,
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   info: {
     paddingHorizontal: 16,
   },
   name: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.text,
     marginBottom: 8,
   },
   priceRow: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
+    flexDirection: "row",
+    alignItems: "baseline",
     marginBottom: 12,
   },
   priceGap: {
@@ -74,16 +74,16 @@ export default StyleSheet.create({
   },
   price: {
     fontSize: 26,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.secondary,
   },
   originalPrice: {
     fontSize: 16,
     color: Colors.textMuted,
-    textDecorationLine: 'line-through',
+    textDecorationLine: "line-through",
   },
   categoryBadge: {
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     backgroundColor: Colors.card,
     borderRadius: 20,
     paddingHorizontal: 12,
@@ -103,10 +103,10 @@ export default StyleSheet.create({
   },
   descTitle: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.textMuted,
     marginBottom: 8,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
     letterSpacing: 0.5,
   },
   description: {
@@ -124,7 +124,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.primary,
     borderRadius: 12,
     paddingVertical: 15,
-    alignItems: 'center',
+    alignItems: "center",
   },
   addButtonDisabled: {
     opacity: 0.6,
@@ -132,12 +132,12 @@ export default StyleSheet.create({
   addButtonText: {
     color: Colors.white,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   addedText: {
     color: Colors.success,
     fontSize: 14,
-    textAlign: 'center',
+    textAlign: "center",
     marginTop: 8,
   },
 });

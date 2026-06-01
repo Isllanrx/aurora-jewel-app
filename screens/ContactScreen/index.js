@@ -1,16 +1,15 @@
-import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
-import { useLanguage } from '../../contexts/LanguageContext';
-import styles from './styles';
-import { Colors } from '../../lib/colors';
+import { Ionicons } from "@expo/vector-icons";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useLanguage } from "../../contexts/LanguageContext";
+import { Colors } from "../../lib/colors";
+import styles from "./styles";
 
 const CONTACTS = [
-  { ionIcon: 'location-outline', titleKey: 'address',   text: 'Rua das Joias, 123\nVila Velha, ES\nCEP: 29100-000' },
-  { ionIcon: 'call-outline',     titleKey: 'phones',    text: '(27) 99999-9999\n(27) 3333-3333'                   },
-  { ionIcon: 'mail-outline',     titleKey: 'emailLabel',text: 'contato@aurorajoias.com.br'                        },
-  { ionIcon: 'time-outline',     titleKey: 'hours',     keys: ['weekdays', 'saturday']                            },
+  { ionIcon: "location-outline", titleKey: "address", text: "Rua das Joias, 123\nVila Velha, ES\nCEP: 29100-000" },
+  { ionIcon: "call-outline", titleKey: "phones", text: "(27) 99999-9999\n(27) 3333-3333" },
+  { ionIcon: "mail-outline", titleKey: "emailLabel", text: "contato@aurorajoias.com.br" },
+  { ionIcon: "time-outline", titleKey: "hours", keys: ["weekdays", "saturday"] },
 ];
 
 export default function ContactScreen({ navigation }) {
@@ -22,7 +21,7 @@ export default function ContactScreen({ navigation }) {
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Ionicons name="menu" size={24} color={Colors.text} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>{t('contactTitle')}</Text>
+        <Text style={styles.headerTitle}>{t("contactTitle")}</Text>
         <View style={{ width: 28 }} />
       </View>
 
@@ -33,9 +32,7 @@ export default function ContactScreen({ navigation }) {
               <Ionicons name={ionIcon} size={22} color={Colors.secondary} style={styles.cardIcon} />
               <View style={{ flex: 1 }}>
                 <Text style={styles.cardTitle}>{t(titleKey)}</Text>
-                <Text style={styles.cardText}>
-                  {keys ? keys.map(k => t(k)).join('\n') : text}
-                </Text>
+                <Text style={styles.cardText}>{keys ? keys.map((k) => t(k)).join("\n") : text}</Text>
               </View>
             </View>
           </View>
@@ -43,7 +40,7 @@ export default function ContactScreen({ navigation }) {
 
         <View style={styles.mapPlaceholder}>
           <Ionicons name="map-outline" size={40} color={Colors.textMuted} />
-          <Text style={styles.mapText}>Mapa — integre com expo-location</Text>
+          <Text style={styles.mapText}>Mapa Ilustrativo</Text>
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -12,35 +12,35 @@ Mobile application for a luxury jewelry store built with **Expo SDK 54 + React N
 
 ## Tech Stack
 
-| Layer              | Technology                                                      |
-|--------------------|-----------------------------------------------------------------|
-| Runtime            | Expo SDK 54 + React Native 0.76.7                               |
-| Navigation         | React Navigation 7 — Stack + Custom Drawer                      |
-| Forms              | React Hook Form 7 (`useForm` + `Controller`)                    |
-| Backend            | Supabase REST + Auth API via `fetch` (no SDK)                   |
-| State Management   | React Context — `AuthContext`, `CartContext`, `LanguageContext` |
-| Internationalization | PT / EN / ES via `LanguageContext` + `lib/i18n.js` (110+ keys) |
-| Icons              | `@expo/vector-icons` v15 — Ionicons                             |
-| Filters            | `@react-native-picker/picker` (native) + Modal (web/Snack)      |
+| Layer                | Technology                                                      |
+| -------------------- | --------------------------------------------------------------- |
+| Runtime              | Expo SDK 54 + React Native 0.76.7                               |
+| Navigation           | React Navigation 7 — Stack + Custom Drawer                      |
+| Forms                | React Hook Form 7 (`useForm` + `Controller`)                    |
+| Backend              | Supabase REST + Auth API via `fetch` (no SDK)                   |
+| State Management     | React Context — `AuthContext`, `CartContext`, `LanguageContext` |
+| Internationalization | PT / EN / ES via `LanguageContext` + `lib/i18n.js` (110+ keys)  |
+| Icons                | `@expo/vector-icons` v15 — Ionicons                             |
+| Filters              | `@react-native-picker/picker` (native) + Modal (web/Snack)      |
 
 ---
 
 ## Application Screens (12)
 
-| #  | Screen         | Type     | Main Functionality                                                |
-|----|---------------|----------|-------------------------------------------------------------------|
-| 1  | Login         | Required | Supabase authentication, error handling, language switch          |
-| 2  | Register      | Required | User registration with validated fields (React Hook Form)         |
-| 3  | Dashboard     | Required | User metrics (RPC) + products by category                         |
-| 4  | Language      | Required | PT / EN / ES selector via LanguageContext                         |
-| 5  | Home          | Custom   | Hero section, statistics, category navigation                     |
-| 6  | Products      | Custom   | Native picker + modal + filtered list                             |
-| 7  | ProductDetail | Custom   | Product details, favorites toggle, add to cart                    |
-| 8  | Cart          | Custom   | Cart items, total calculation, checkout                           |
-| 9  | Favorites     | Custom   | Wishlist from Supabase                                            |
-| 10 | Testimonials  | Custom   | Customer reviews                                                  |
-| 11 | Contact       | Custom   | Address, phone, business hours                                    |
-| 12 | Profile       | Custom   | User profile update                                               |
+| #   | Screen        | Type     | Main Functionality                                        |
+| --- | ------------- | -------- | --------------------------------------------------------- |
+| 1   | Login         | Required | Supabase authentication, error handling, language switch  |
+| 2   | Register      | Required | User registration with validated fields (React Hook Form) |
+| 3   | Dashboard     | Required | User metrics (RPC) + products by category                 |
+| 4   | Language      | Required | PT / EN / ES selector via LanguageContext                 |
+| 5   | Home          | Custom   | Hero section, statistics, category navigation             |
+| 6   | Products      | Custom   | Native picker + modal + filtered list                     |
+| 7   | ProductDetail | Custom   | Product details, favorites toggle, add to cart            |
+| 8   | Cart          | Custom   | Cart items, total calculation, checkout                   |
+| 9   | Favorites     | Custom   | Wishlist from Supabase                                    |
+| 10  | Testimonials  | Custom   | Customer reviews                                          |
+| 11  | Contact       | Custom   | Address, phone, business hours                            |
+| 12  | Profile       | Custom   | User profile update                                       |
 
 ---
 
@@ -66,7 +66,7 @@ flowchart TD
     Products --> ProductDetail
     Favorites --> ProductDetail
     ProductDetail --> Cart
-````
+```
 
 ---
 
@@ -154,9 +154,9 @@ npx expo start --android
 1. Access: [https://snack.expo.dev](https://snack.expo.dev)
 2. Import Git Repository
 3. Use:
+   - Repository: [https://github.com/Isllanrx/aurora-jewel-app](https://github.com/Isllanrx/aurora-jewel-app)
+   - Branch: main
 
-   * Repository: [https://github.com/Isllanrx/aurora-jewel-app](https://github.com/Isllanrx/aurora-jewel-app)
-   * Branch: main
 4. Select Web platform
 
 ---
@@ -166,18 +166,17 @@ npx expo start --android
 1. Create project: [https://supabase.com](https://supabase.com)
 2. Disable email confirmation
 3. Run migrations:
-
-   * `001_tables.sql`
-   * `002_triggers.sql`
-   * `003_rls.sql`
-   * `004_rpc.sql`
-   * `005_seed.sql`
+   - `001_tables.sql`
+   - `002_triggers.sql`
+   - `003_rls.sql`
+   - `004_rpc.sql`
+   - `005_seed.sql`
 
 Update credentials:
 
 ```js
-export const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
-export const SUPABASE_API_KEY = 'YOUR_ANON_KEY';
+export const SUPABASE_URL = "https://YOUR_PROJECT.supabase.co";
+export const SUPABASE_API_KEY = "YOUR_ANON_KEY";
 ```
 
 ---
@@ -220,9 +219,9 @@ export const SUPABASE_API_KEY = 'YOUR_ANON_KEY';
 
 ## Team
 
-* Isllan Toso Pereira
-* Marcelo Passamai Marques
-* Stefano Silvestri
+- Isllan Toso Pereira
+- Marcelo Passamai Marques
+- Stefano Silvestri
 
 ---
 

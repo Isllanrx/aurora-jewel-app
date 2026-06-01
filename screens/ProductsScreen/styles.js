@@ -1,5 +1,5 @@
-import { StyleSheet, Platform } from 'react-native';
-import { Colors } from '../../lib/colors';
+import { Platform, StyleSheet } from "react-native";
+import { Colors } from "../../lib/colors";
 
 export default StyleSheet.create({
   container: {
@@ -7,16 +7,16 @@ export default StyleSheet.create({
     backgroundColor: Colors.background,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 16,
     paddingVertical: 12,
     backgroundColor: Colors.surface,
   },
   headerTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.secondary,
   },
   filterRow: {
@@ -30,7 +30,7 @@ export default StyleSheet.create({
   filterLabel: {
     color: Colors.secondary,
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: "600",
     letterSpacing: 0.4,
     marginBottom: 6,
   },
@@ -43,7 +43,7 @@ export default StyleSheet.create({
   picker: {
     color: Colors.text,
     height: 48,
-    backgroundColor: Platform.OS === 'android' ? Colors.card : 'transparent',
+    backgroundColor: Platform.OS === "android" ? Colors.card : "transparent",
   },
   pickerItem: {
     backgroundColor: Colors.card,
@@ -55,26 +55,26 @@ export default StyleSheet.create({
     paddingBottom: 32,
   },
   emptyText: {
-    textAlign: 'center',
+    textAlign: "center",
     color: Colors.textMuted,
     marginTop: 60,
     fontSize: 15,
   },
   loadingWrapper: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: Colors.background,
   },
   row: {
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
 
   /* Web-only: botão que abre o modal de seleção */
   webPickerBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     backgroundColor: Colors.card,
     borderRadius: 8,
     borderWidth: 1,
@@ -90,9 +90,9 @@ export default StyleSheet.create({
   /* Modal overlay */
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(0,0,0,0.6)",
+    justifyContent: "center",
+    alignItems: "center",
   },
   modalContent: {
     backgroundColor: Colors.surface,
@@ -106,7 +106,7 @@ export default StyleSheet.create({
   modalTitle: {
     color: Colors.secondary,
     fontSize: 13,
-    fontWeight: '600',
+    fontWeight: "600",
     letterSpacing: 0.4,
     paddingHorizontal: 16,
     paddingVertical: 10,
@@ -115,9 +115,9 @@ export default StyleSheet.create({
     marginBottom: 4,
   },
   modalOption: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 16,
     paddingVertical: 13,
     borderRadius: 8,
@@ -125,7 +125,7 @@ export default StyleSheet.create({
     marginVertical: 2,
   },
   modalOptionActive: {
-    backgroundColor: Colors.primary + '22',
+    backgroundColor: Colors.primary + "22",
   },
   modalOptionText: {
     color: Colors.text,
@@ -133,6 +133,6 @@ export default StyleSheet.create({
   },
   modalOptionTextActive: {
     color: Colors.secondary,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 });

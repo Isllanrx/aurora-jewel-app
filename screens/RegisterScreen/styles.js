@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { Colors } from '../../lib/colors';
+import { StyleSheet } from "react-native";
+import { Colors } from "../../lib/colors";
 
 export default StyleSheet.create({
   container: {
@@ -12,14 +12,14 @@ export default StyleSheet.create({
     paddingVertical: 32,
   },
   topRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: 24,
   },
   backButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   backText: {
     color: Colors.secondary,
@@ -27,8 +27,8 @@ export default StyleSheet.create({
     marginLeft: 4,
   },
   langBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 14,
@@ -39,12 +39,12 @@ export default StyleSheet.create({
   langBtnText: {
     color: Colors.secondary,
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginLeft: 4,
   },
   title: {
     fontSize: 26,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.text,
     marginBottom: 4,
   },
@@ -84,7 +84,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.primary,
     borderRadius: 10,
     paddingVertical: 14,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 28,
   },
   buttonDisabled: {
@@ -93,11 +93,11 @@ export default StyleSheet.create({
   buttonText: {
     color: Colors.white,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   loginRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
     marginTop: 16,
   },
   loginText: {
@@ -107,12 +107,12 @@ export default StyleSheet.create({
   loginLink: {
     color: Colors.secondary,
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginLeft: 4,
   },
   banner: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderRadius: 10,
     paddingHorizontal: 14,
     paddingVertical: 12,

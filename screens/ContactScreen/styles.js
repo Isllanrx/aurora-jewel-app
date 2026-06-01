@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { Colors } from '../../lib/colors';
+import { StyleSheet } from "react-native";
+import { Colors } from "../../lib/colors";
 
 export default StyleSheet.create({
   container: {
@@ -7,15 +7,15 @@ export default StyleSheet.create({
     backgroundColor: Colors.background,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 16,
     paddingVertical: 12,
     backgroundColor: Colors.surface,
   },
   hamburgerIcon: { fontSize: 22, color: Colors.text },
-  headerTitle:   { fontSize: 18, fontWeight: 'bold', color: Colors.secondary },
+  headerTitle: { fontSize: 18, fontWeight: "bold", color: Colors.secondary },
   scroll: {
     padding: 16,
     paddingBottom: 32,
@@ -29,8 +29,8 @@ export default StyleSheet.create({
     borderColor: Colors.border,
   },
   cardRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+    flexDirection: "row",
+    alignItems: "flex-start",
   },
   cardIcon: {
     marginRight: 14,
@@ -39,8 +39,8 @@ export default StyleSheet.create({
   cardTitle: {
     fontSize: 13,
     color: Colors.textMuted,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
+    fontWeight: "bold",
+    textTransform: "uppercase",
     letterSpacing: 0.5,
     marginBottom: 4,
   },
@@ -53,8 +53,8 @@ export default StyleSheet.create({
     backgroundColor: Colors.surface,
     borderRadius: 14,
     height: 160,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderWidth: 1,
     borderColor: Colors.border,
     marginTop: 8,

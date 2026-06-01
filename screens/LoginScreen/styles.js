@@ -7,9 +7,9 @@ export default StyleSheet.create({
     backgroundColor: Colors.background,
   },
   topBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginTop: 8,
     marginHorizontal: 20,
   },
@@ -19,8 +19,8 @@ export default StyleSheet.create({
     flexShrink: 1,
   },
   langBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 14,
@@ -31,7 +31,7 @@ export default StyleSheet.create({
   langBtnText: {
     color: Colors.secondary,
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginLeft: 4,
   },
   scroll: {
@@ -160,7 +160,7 @@ export default StyleSheet.create({
     flexShrink: 1,
   },
   teamFooter: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 36,
     marginBottom: 8,
   },

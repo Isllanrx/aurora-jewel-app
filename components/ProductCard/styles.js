@@ -1,7 +1,7 @@
-import { StyleSheet, Dimensions } from 'react-native';
-import { Colors } from '../../lib/colors';
+import { Dimensions, StyleSheet } from "react-native";
+import { Colors } from "../../lib/colors";
 
-const CARD_WIDTH = (Dimensions.get('window').width - 36) / 2;
+const CARD_WIDTH = (Dimensions.get("window").width - 36) / 2;
 
 export default StyleSheet.create({
   card: {
@@ -9,13 +9,13 @@ export default StyleSheet.create({
     backgroundColor: Colors.card,
     borderRadius: 14,
     marginBottom: 12,
-    overflow: 'hidden',
+    overflow: "hidden",
     borderWidth: 1,
     borderColor: Colors.border,
   },
   imageWrapper: {
     backgroundColor: Colors.surface,
-    alignItems: 'center',
+    alignItems: "center",
     paddingVertical: 12,
   },
   image: {
@@ -23,7 +23,7 @@ export default StyleSheet.create({
     height: 110,
   },
   badge: {
-    position: 'absolute',
+    position: "absolute",
     top: 8,
     left: 8,
     backgroundColor: Colors.primary,
@@ -34,7 +34,7 @@ export default StyleSheet.create({
   badgeText: {
     color: Colors.white,
     fontSize: 10,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   info: {
     padding: 10,
@@ -42,19 +42,19 @@ export default StyleSheet.create({
   name: {
     color: Colors.text,
     fontSize: 13,
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 4,
     lineHeight: 17,
   },
   price: {
     color: Colors.secondary,
     fontSize: 15,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   originalPrice: {
     color: Colors.textMuted,
     fontSize: 11,
-    textDecorationLine: 'line-through',
+    textDecorationLine: "line-through",
     marginTop: 1,
   },
   addBtn: {
@@ -63,7 +63,7 @@ export default StyleSheet.create({
     marginTop: 0,
     borderRadius: 8,
     paddingVertical: 8,
-    alignItems: 'center',
+    alignItems: "center",
   },
   addBtnAdded: {
     backgroundColor: Colors.success,
@@ -71,11 +71,11 @@ export default StyleSheet.create({
   addBtnText: {
     color: Colors.white,
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   imgFallback: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: Colors.surface,
   },
   imgFallbackIcon: {

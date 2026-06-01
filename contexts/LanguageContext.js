@@ -1,10 +1,10 @@
-import React, { createContext, useContext, useState } from 'react';
-import { translations } from '../lib/i18n';
+import { createContext, useContext, useState } from "react";
+import { translations } from "../lib/i18n";
 
 const LanguageContext = createContext(null);
 
 export function LanguageProvider({ children }) {
-  const [language, setLanguage] = useState('pt');
+  const [language, setLanguage] = useState("pt");
 
   function t(key) {
     return translations[language]?.[key] ?? key;
@@ -16,15 +16,11 @@ export function LanguageProvider({ children }) {
     }
   }
 
-  return (
-    <LanguageContext.Provider value={{ language, changeLanguage, t }}>
-      {children}
-    </LanguageContext.Provider>
-  );
+  return <LanguageContext.Provider value={{ language, changeLanguage, t }}>{children}</LanguageContext.Provider>;
 }
 
 export function useLanguage() {
   const ctx = useContext(LanguageContext);
-  if (!ctx) throw new Error('useLanguage must be used inside LanguageProvider');
+  if (!ctx) throw new Error("useLanguage must be used inside LanguageProvider");
   return ctx;
 }

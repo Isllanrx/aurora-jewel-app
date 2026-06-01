@@ -1,25 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
-import { dbSelect } from '../../lib/supabase';
-import { useLanguage } from '../../contexts/LanguageContext';
-import TestimonialCard from '../../components/TestimonialCard';
-import styles from './styles';
-import { Colors } from '../../lib/colors';
+import { Ionicons } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, FlatList, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import TestimonialCard from "../../components/TestimonialCard";
+import { useLanguage } from "../../contexts/LanguageContext";
+import { Colors } from "../../lib/colors";
+import { dbSelect } from "../../lib/supabase";
+import styles from "./styles";
 
 const LOCAL_TESTIMONIALS = [
-  { id: '1', user_name: 'João da Silva',   rating: 5, review: 'Comprei um relógio Orient e ficou incrível. Atendimento impecável e entrega rápida!' },
-  { id: '2', user_name: 'Maria da Silva',  rating: 5, review: 'Anel Pandora lindo! Qualidade excepcional. Com certeza vou comprar mais peças aqui.' },
-  { id: '3', user_name: 'Carlos Henrique', rating: 5, review: 'Presenteei minha esposa com um cordão Swarovski. Ela amou! Embalagem luxuosa e peça perfeita.' },
-  { id: '4', user_name: 'Ana Paula',       rating: 5, review: 'Atendimento incrível e preços justos. Aurora Joias é minha joalheria favorita da cidade.' },
-  { id: '5', user_name: 'Roberto Souza',   rating: 5, review: 'Relógio Seiko com acabamento impecável. Superou todas as minhas expectativas. Recomendo!' },
+  { id: "1", user_name: "João da Silva", rating: 5, review: "Comprei um relógio Orient e ficou incrível. Atendimento impecável e entrega rápida!" },
+  { id: "2", user_name: "Maria da Silva", rating: 5, review: "Anel Pandora lindo! Qualidade excepcional. Com certeza vou comprar mais peças aqui." },
+  { id: "3", user_name: "Carlos Henrique", rating: 5, review: "Presenteei minha esposa com um cordão Swarovski. Ela amou! Embalagem luxuosa e peça perfeita." },
+  { id: "4", user_name: "Ana Paula", rating: 5, review: "Atendimento incrível e preços justos. Aurora Joias é minha joalheria favorita da cidade." },
+  { id: "5", user_name: "Roberto Souza", rating: 5, review: "Relógio Seiko com acabamento impecável. Superou todas as minhas expectativas. Recomendo!" },
 ];
 
 export default function TestimonialsScreen({ navigation }) {
@@ -27,15 +21,17 @@ export default function TestimonialsScreen({ navigation }) {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => { fetchTestimonials(); }, []);
+  useEffect(() => {
+    fetchTestimonials();
+  }, []);
 
   async function fetchTestimonials() {
     setLoading(true);
     try {
-      const data = await dbSelect('testimonials');
+      const data = await dbSelect("testimonials");
       setTestimonials(data.length > 0 ? data : LOCAL_TESTIMONIALS);
     } catch (err) {
-      console.warn('TestimonialsScreen fetch:', err.message);
+      console.warn("TestimonialsScreen fetch:", err.message);
       setTestimonials(LOCAL_TESTIMONIALS);
     } finally {
       setLoading(false);
@@ -56,18 +52,16 @@ export default function TestimonialsScreen({ navigation }) {
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Ionicons name="menu" size={24} color={Colors.text} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>{t('testimonialsTitle')}</Text>
+        <Text style={styles.headerTitle}>{t("testimonialsTitle")}</Text>
         <View style={{ width: 28 }} />
       </View>
 
       <FlatList
         data={testimonials}
-        keyExtractor={item => String(item.id)}
+        keyExtractor={(item) => String(item.id)}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item, index }) => (
-          <TestimonialCard testimonial={item} index={index} />
-        )}
+        renderItem={({ item, index }) => <TestimonialCard testimonial={item} index={index} />}
       />
     </SafeAreaView>
   );

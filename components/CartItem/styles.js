@@ -1,21 +1,21 @@
-import { StyleSheet } from 'react-native';
-import { Colors } from '../../lib/colors';
+import { StyleSheet } from "react-native";
+import { Colors } from "../../lib/colors";
 
 export default StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    flexDirection: "row",
     backgroundColor: Colors.card,
     borderRadius: 12,
     marginBottom: 10,
-    overflow: 'hidden',
+    overflow: "hidden",
     borderWidth: 1,
     borderColor: Colors.border,
   },
   imageWrapper: {
     backgroundColor: Colors.surface,
     padding: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     width: 80,
   },
   image: {
@@ -25,18 +25,18 @@ export default StyleSheet.create({
   info: {
     flex: 1,
     padding: 12,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   name: {
     color: Colors.text,
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 4,
   },
   price: {
     color: Colors.secondary,
     fontSize: 15,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   subtotal: {
     color: Colors.textMuted,
@@ -44,8 +44,8 @@ export default StyleSheet.create({
     marginTop: 2,
   },
   controls: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 8,
   },
   qtyBtn: {
@@ -53,26 +53,26 @@ export default StyleSheet.create({
     height: 28,
     backgroundColor: Colors.surface,
     borderRadius: 6,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderWidth: 1,
     borderColor: Colors.border,
   },
   qtyBtnText: {
     color: Colors.text,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   qty: {
     color: Colors.text,
     fontSize: 15,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginHorizontal: 12,
     minWidth: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   removeBtn: {
-    marginLeft: 'auto',
+    marginLeft: "auto",
     padding: 4,
   },
   removeIcon: {

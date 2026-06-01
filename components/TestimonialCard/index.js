@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { View, Text, Image } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { Images } from '../../lib/assets';
-import styles from './styles';
-import { Colors } from '../../lib/colors';
+import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { Image, Text, View } from "react-native";
+import { Images } from "../../lib/assets";
+import { Colors } from "../../lib/colors";
+import styles from "./styles";
 
 const AVATAR_IMAGES = [Images.pic1, Images.pic2, Images.pic3];
 
@@ -12,8 +12,13 @@ export default function TestimonialCard({ testimonial, index = 0 }) {
   const [imgError, setImgError] = useState(false);
 
   const initials = user_name
-    ? user_name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2)
-    : '--';
+    ? user_name
+        .split(" ")
+        .map((w) => w[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
+    : "--";
 
   const showImage = !imgError && (avatar_url || AVATAR_IMAGES[index % 3]);
 
@@ -22,11 +27,7 @@ export default function TestimonialCard({ testimonial, index = 0 }) {
       <View style={styles.header}>
         <View style={styles.avatar}>
           {showImage ? (
-            <Image
-              source={avatar_url ? { uri: avatar_url } : AVATAR_IMAGES[index % 3]}
-              style={styles.avatarImage}
-              onError={() => setImgError(true)}
-            />
+            <Image source={avatar_url ? { uri: avatar_url } : AVATAR_IMAGES[index % 3]} style={styles.avatarImage} onError={() => setImgError(true)} />
           ) : (
             <Text style={styles.avatarText}>{initials}</Text>
           )}

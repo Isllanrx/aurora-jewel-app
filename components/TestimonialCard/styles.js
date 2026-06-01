@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { Colors } from '../../lib/colors';
+import { StyleSheet } from "react-native";
+import { Colors } from "../../lib/colors";
 
 export default StyleSheet.create({
   card: {
@@ -13,8 +13,8 @@ export default StyleSheet.create({
     borderLeftColor: Colors.primary,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 12,
   },
   avatar: {
@@ -22,15 +22,15 @@ export default StyleSheet.create({
     height: 46,
     borderRadius: 23,
     backgroundColor: Colors.surface,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginRight: 12,
     borderWidth: 1,
     borderColor: Colors.primary,
   },
   avatarText: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.secondary,
   },
   avatarImage: {
@@ -38,12 +38,12 @@ export default StyleSheet.create({
     height: 46,
     borderRadius: 23,
   },
-  userName:  { color: Colors.text, fontWeight: 'bold', fontSize: 15 },
-  starsRow:  { flexDirection: 'row', marginTop: 2 },
+  userName: { color: Colors.text, fontWeight: "bold", fontSize: 15 },
+  starsRow: { flexDirection: "row", marginTop: 2 },
   review: {
     color: Colors.textMuted,
     fontSize: 14,
     lineHeight: 20,
-    fontStyle: 'italic',
+    fontStyle: "italic",
   },
 });
