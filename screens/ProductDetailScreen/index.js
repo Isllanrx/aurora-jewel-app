@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -29,21 +29,22 @@ export default function ProductDetailScreen({ navigation, route }) {
   const [isFav,      setIsFav]      = useState(false);
   const [favLoading, setFavLoading] = useState(false);
 
-  const loadFavoriteStatus = useCallback(async () => {
-    if (!user) return;
-    try {
-      const rows = await dbSelect(
-        'favorites',
-        { 'user_id': `eq.${user.id}`, 'product_id': `eq.${product.id}` },
-        token
-      );
-      setIsFav(rows.length > 0);
-    } catch {
-      // default false
+  useEffect(() => {
+    async function loadFavoriteStatus() {
+      if (!user) return;
+      try {
+        const rows = await dbSelect(
+          'favorites',
+          { 'user_id': `eq.${user.id}`, 'product_id': `eq.${product.id}` },
+          token
+        );
+        setIsFav(rows.length > 0);
+      } catch (err) {
+        console.warn('loadFavoriteStatus:', err.message);
+      }
     }
+    loadFavoriteStatus();
   }, [user, product.id, token]);
-
-  useEffect(() => { loadFavoriteStatus(); }, [loadFavoriteStatus]);
 
   async function addFavorite() {
     await dbInsert('favorites', { user_id: user.id, product_id: product.id }, token);
