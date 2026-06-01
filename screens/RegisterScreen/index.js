@@ -31,11 +31,6 @@ function getFriendlyError(rawMessage, t) {
   return t('genericAuthError');
 }
 
-function validatePhone(value) {
-  const digits = value.replace(/\D/g, '');
-  return (digits.length === 10 || digits.length === 11) || 'Telefone inválido';
-}
-
 function Field({ control, errors, name, label, placeholder, keyboardType, secureTextEntry, autoCapitalize, rules, required }) {
   return (
     <>
@@ -84,6 +79,11 @@ export default function RegisterScreen({ navigation }) {
   });
 
   const passwordValue = watch('password');
+
+  function validatePhone(value) {
+    const digits = value.replace(/\D/g, '');
+    return (digits.length === 10 || digits.length === 11) || t('phoneInvalid');
+  }
 
   function cycleLang() {
     const idx = LANG_CYCLE.indexOf(language);

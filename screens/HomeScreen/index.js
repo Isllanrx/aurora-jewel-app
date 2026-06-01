@@ -15,23 +15,23 @@ import { useCart } from '../../contexts/CartContext';
 import styles from './styles';
 import { Colors } from '../../lib/colors';
 
-const CATEGORIES = [
-  { key: 'relogio', icon: 'time-outline',    label: 'Relógios' },
-  { key: 'anel',    icon: 'diamond-outline', label: 'Anéis'    },
-  { key: 'cordao',  icon: 'link-outline',    label: 'Cordões'  },
-];
-
-const STATS = [
-  { number: '500+', label: 'Clientes' },
-  { number: '150+', label: 'Produtos'  },
-  { number: '5.0',  label: 'Avaliação' },
-];
-
 export default function HomeScreen({ navigation }) {
   const { t } = useLanguage();
   const { getTotalItems } = useCart();
   const cartCount = getTotalItems();
   const [bannerError, setBannerError] = useState(false);
+
+  const CATEGORIES = [
+    { key: 'relogio', icon: 'time-outline',    label: t('watches')   },
+    { key: 'anel',    icon: 'diamond-outline', label: t('rings')     },
+    { key: 'cordao',  icon: 'link-outline',    label: t('necklaces') },
+  ];
+
+  const STATS = [
+    { number: '500+', label: t('statClients')  },
+    { number: '150+', label: t('statProducts') },
+    { number: '5.0',  label: t('statRating')   },
+  ];
 
   return (
     <SafeAreaView style={styles.container}>
