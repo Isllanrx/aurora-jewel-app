@@ -1,51 +1,52 @@
-# Aurora Joias
+# Aurora Jewelry App
 
-App mobile de joalheria de luxo construído com **Expo SDK 54 + React Native 0.76**, integrado ao Supabase e com suporte a PT / EN / ES.
-Projeto acadêmico — 2º Bimestre | Desenvolvimento Mobile.
+Mobile application for a luxury jewelry store built with **Expo SDK 54 + React Native 0.76**, integrated with Supabase and supporting PT / EN / ES.
+
+**Academic Project — 2nd Term | Mobile Development**
 
 ---
 
 ## Tech Stack
 
-| Camada        | Tecnologia                                                      |
-| ------------- | --------------------------------------------------------------- |
-| Runtime       | Expo SDK 54 + React Native 0.76.7                               |
-| Navegação     | React Navigation 7 — Stack + Drawer customizado                 |
-| Formulários   | React Hook Form 7 (`useForm` + `Controller`)                    |
-| Backend       | Supabase REST + Auth API via `fetch` (sem SDK)                  |
-| Estado global | React Context — `AuthContext`, `CartContext`, `LanguageContext` |
-| i18n          | PT / EN / ES via `LanguageContext` + `lib/i18n.js` (110+ chaves)|
-| Ícones        | `@expo/vector-icons` v15 — Ionicons                             |
-| Filtros       | `@react-native-picker/picker` (nativo) + Modal (web/Snack)      |
+| Layer              | Technology                                                      |
+|--------------------|-----------------------------------------------------------------|
+| Runtime            | Expo SDK 54 + React Native 0.76.7                               |
+| Navigation         | React Navigation 7 — Stack + Custom Drawer                      |
+| Forms              | React Hook Form 7 (`useForm` + `Controller`)                    |
+| Backend            | Supabase REST + Auth API via `fetch` (no SDK)                   |
+| State Management   | React Context — `AuthContext`, `CartContext`, `LanguageContext` |
+| Internationalization | PT / EN / ES via `LanguageContext` + `lib/i18n.js` (110+ keys) |
+| Icons              | `@expo/vector-icons` v15 — Ionicons                             |
+| Filters            | `@react-native-picker/picker` (native) + Modal (web/Snack)      |
 
 ---
 
-## 12 Telas
+## Application Screens (12)
 
-| #   | Tela          | Tipo        | Funcionalidade principal                                           |
-| --- | ------------- | ----------- | ------------------------------------------------------------------ |
-| 1   | Login         | Obrigatória | Autenticação Supabase, erro amigável, botão de idioma              |
-| 2   | Register      | Obrigatória | Cadastro com 5 campos validados (React Hook Form), botão de idioma |
-| 3   | Dashboard     | Obrigatória | Total de usuários (RPC) + produtos por categoria com barras        |
-| 4   | Language      | Obrigatória | Seletor PT / EN / ES via LanguageContext                           |
-| 5   | Home          | Custom      | Hero, stats, categorias com navegação filtrada                     |
-| 6   | Products      | Custom      | RNPicker nativo + Modal web + FlatList (filtro por categoria)      |
-| 7   | ProductDetail | Custom      | Detalhe, toggle favorito (POST/DELETE Supabase), AddToCart         |
-| 8   | Cart          | Custom      | Lista com CartItem, total e checkout via CartContext               |
-| 9   | Favorites     | Custom      | Wishlist carregada do Supabase com useEffect                       |
-| 10  | Testimonials  | Custom      | Depoimentos do Supabase via TestimonialCard                        |
-| 11  | Contact       | Custom      | Endereço, telefones e horários de funcionamento                    |
-| 12  | Profile       | Custom      | Edição de dados pessoais (PATCH no Supabase)                       |
+| #  | Screen         | Type     | Main Functionality                                                |
+|----|---------------|----------|-------------------------------------------------------------------|
+| 1  | Login         | Required | Supabase authentication, error handling, language switch          |
+| 2  | Register      | Required | User registration with validated fields (React Hook Form)         |
+| 3  | Dashboard     | Required | User metrics (RPC) + products by category                         |
+| 4  | Language      | Required | PT / EN / ES selector via LanguageContext                         |
+| 5  | Home          | Custom   | Hero section, statistics, category navigation                     |
+| 6  | Products      | Custom   | Native picker + modal + filtered list                             |
+| 7  | ProductDetail | Custom   | Product details, favorites toggle, add to cart                    |
+| 8  | Cart          | Custom   | Cart items, total calculation, checkout                           |
+| 9  | Favorites     | Custom   | Wishlist from Supabase                                            |
+| 10 | Testimonials  | Custom   | Customer reviews                                                  |
+| 11 | Contact       | Custom   | Address, phone, business hours                                    |
+| 12 | Profile       | Custom   | User profile update                                               |
 
 ---
 
-## Fluxo de Navegação
+## Navigation Flow
 
 ```mermaid
 flowchart TD
-    Login([Login]) -->|login ok| Main
-    Login -->|cadastrar| Register([Register])
-    Register -->|voltar| Login
+    Login -->|success| Main
+    Login -->|register| Register
+    Register -->|back| Login
 
     Main --> Home
     Main --> Products
@@ -57,207 +58,168 @@ flowchart TD
     Main --> Profile
     Main --> Language
 
-    Home -->|clica categoria| Products
-    Products -->|seleciona produto| ProductDetail
-    Favorites -->|seleciona produto| ProductDetail
-    ProductDetail -->|adicionar ao carrinho| Cart
-
-    subgraph Main [Drawer Navigator]
-        Home
-        Products
-        Cart
-        Favorites
-        Dashboard
-        Testimonials
-        Contact
-        Profile
-        Language
-        ProductDetail
-    end
-```
+    Home --> Products
+    Products --> ProductDetail
+    Favorites --> ProductDetail
+    ProductDetail --> Cart
+````
 
 ---
 
-## Esquema do Banco de Dados
+## Database Schema
 
 ```mermaid
 erDiagram
     auth_users {
-        uuid id PK
+        uuid id
         text email
     }
+
     profiles {
-        uuid id PK
+        uuid id
         text name
         text phone
         timestamptz created_at
     }
+
     products {
-        uuid id PK
+        uuid id
         text name
         numeric price
-        numeric original_price
-        text image_url
         text category
-        text badge
-        text description
-        timestamptz created_at
-    }
-    favorites {
-        uuid id PK
-        uuid user_id FK
-        uuid product_id FK
-        timestamptz created_at
-    }
-    testimonials {
-        uuid id PK
-        text user_name
-        text review
-        int rating
-        timestamptz created_at
     }
 
-    auth_users ||--|| profiles    : "1:1 via trigger"
-    auth_users ||--o{ favorites   : "tem"
-    products   ||--o{ favorites   : "salvo em"
+    favorites {
+        uuid id
+        uuid user_id
+        uuid product_id
+    }
+
+    auth_users ||--|| profiles : has
+    auth_users ||--o{ favorites : owns
+    products ||--o{ favorites : referenced_by
 ```
 
 ---
 
-## Arquitetura do App
+## Application Architecture
 
 ```mermaid
 graph TD
-    AppJS["App.js\n(GestureHandlerRootView)"]
+    AppJS["App.js"]
 
-    AppJS --> LP[LanguageProvider]
-    LP --> AP[AuthProvider]
-    AP --> CP[CartProvider]
-    CP --> NC[NavigationContainer]
-    NC --> AN[AppNavigator\nStack]
+    AppJS --> LanguageProvider
+    LanguageProvider --> AuthProvider
+    AuthProvider --> CartProvider
+    CartProvider --> NavigationContainer
+    NavigationContainer --> AppNavigator
 
-    AN --> LS[LoginScreen]
-    AN --> RS[RegisterScreen]
-    AN --> MD[MainDrawer\nDrawer Navigator]
+    AppNavigator --> LoginScreen
+    AppNavigator --> RegisterScreen
+    AppNavigator --> MainDrawer
 
-    MD --> DC[DrawerContent\nCustomizado]
-    MD --> HS[HomeScreen]
-    MD --> PS[ProductsScreen\nPicker nativo + Modal web]
-    MD --> PDS[ProductDetailScreen]
-    MD --> CS[CartScreen]
-    MD --> FS[FavoritesScreen]
-    MD --> DS[DashboardScreen]
-    MD --> TS[TestimonialsScreen]
-    MD --> COS[ContactScreen]
-    MD --> PRS[ProfileScreen]
-    MD --> LGS[LanguageScreen]
-
-    subgraph Contexts
-        AC[AuthContext\ncreateContext]
-        CC[CartContext\ncreateContext]
-        LC[LanguageContext\ncreateContext]
-    end
-
-    subgraph Lib
-        SB[supabase.js\ndbSelect / dbInsert\ndbDelete / dbRpc]
-        I18N[i18n.js\nPT / EN / ES]
-        CLR[colors.js\nLuxury Gold]
-    end
+    MainDrawer --> HomeScreen
+    MainDrawer --> ProductsScreen
+    MainDrawer --> ProductDetailScreen
+    MainDrawer --> CartScreen
+    MainDrawer --> FavoritesScreen
+    MainDrawer --> DashboardScreen
+    MainDrawer --> TestimonialsScreen
+    MainDrawer --> ContactScreen
+    MainDrawer --> ProfileScreen
+    MainDrawer --> LanguageScreen
 ```
 
 ---
 
-## Como Rodar
+## Getting Started
 
-### Localmente
+### Local Setup
 
 ```bash
 npm install --legacy-peer-deps
-npx expo start          # QR code para Expo Go
-npx expo start --web    # versão web no navegador
+npx expo start
+npx expo start --web
 npx expo start --android
 ```
 
-### Expo Snack (recomendado para demo)
+---
 
-1. Acesse [snack.expo.dev](https://snack.expo.dev)
-2. Clique em `...` → **Import git repository**
-3. Preencha:
-   - **Repository URL:** `https://github.com/Isllanrx/aurora-jewel-app`
-   - **Folder path:** *(deixar vazio)*
-   - **Branch:** `main`
-4. Aguarde o import e selecione **Web** como plataforma
+### Expo Snack (Recommended)
+
+1. Access: [https://snack.expo.dev](https://snack.expo.dev)
+2. Import Git Repository
+3. Use:
+
+   * Repository: [https://github.com/Isllanrx/aurora-jewel-app](https://github.com/Isllanrx/aurora-jewel-app)
+   * Branch: main
+4. Select Web platform
 
 ---
 
-## Configuração do Supabase
+## Supabase Configuration
 
-O projeto já vem com credenciais configuradas em `lib/supabase.js` (anon key pública, protegida por RLS).
+1. Create project: [https://supabase.com](https://supabase.com)
+2. Disable email confirmation
+3. Run migrations:
 
-Para usar seu próprio projeto Supabase:
+   * `001_tables.sql`
+   * `002_triggers.sql`
+   * `003_rls.sql`
+   * `004_rpc.sql`
+   * `005_seed.sql`
 
-1. Crie um projeto em [supabase.com](https://supabase.com)
-2. Em **Authentication → Providers → Email** → desmarque **"Confirm email"**
-3. Execute as migrations locais em ordem no **SQL Editor**:
-   - `supabase/migrations/001_tables.sql`
-   - `supabase/migrations/002_triggers.sql`
-   - `supabase/migrations/003_rls.sql`
-   - `supabase/migrations/004_rpc.sql`
-   - `supabase/migrations/005_seed.sql`
-4. Substitua em `lib/supabase.js`:
+Update credentials:
 
 ```js
-export const SUPABASE_URL     = 'https://SEU_PROJETO.supabase.co';
-export const SUPABASE_API_KEY = 'SUA_CHAVE_ANON';
+export const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
+export const SUPABASE_API_KEY = 'YOUR_ANON_KEY';
 ```
 
-> As migrations existem localmente mas não são rastreadas no git (arquivos `.sql` causam falha no import do Expo Snack).
+---
+
+## Database Access Rules
+
+| Table        | Access        | Description     |
+| ------------ | ------------- | --------------- |
+| products     | Public read   | Product catalog |
+| favorites    | Authenticated | User wishlist   |
+| testimonials | Public read   | Reviews         |
+| profiles     | Authenticated | User profile    |
 
 ---
 
-## Banco de Dados
+## Design System
 
-| Tabela         | Acesso                        | Descrição                                           |
-| -------------- | ----------------------------- | --------------------------------------------------- |
-| `products`     | Leitura pública               | Catálogo — name, price, category, badge, description |
-| `favorites`    | Autenticado (RLS por user_id) | Wishlist — user_id + product_id                     |
-| `testimonials` | Leitura pública               | Depoimentos — user_name, rating, review             |
-| `profiles`     | Autenticado (RLS por id)      | Dados do usuário — criado via trigger no signup     |
-
----
-
-## Design
-
-Tema: **Dark + Luxury Gold**
-
-| Token        | Hex       | Uso                                        |
-| ------------ | --------- | ------------------------------------------ |
-| `primary`    | `#B8860B` | Botões, bordas ativas, barras do dashboard |
-| `secondary`  | `#DAA520` | Títulos, ícones, links                     |
-| `background` | `#0A0A0A` | Fundo de todas as telas                    |
-| `surface`    | `#1C1C1C` | Headers, drawer, surface cards             |
-| `card`       | `#242424` | Inputs, picker, product cards              |
-| `text`       | `#F5F5DC` | Texto principal                            |
-| `textMuted`  | `#A0A0A0` | Labels, placeholders                       |
+| Token      | Value   |
+| ---------- | ------- |
+| primary    | #B8860B |
+| secondary  | #DAA520 |
+| background | #0A0A0A |
+| surface    | #1C1C1C |
+| card       | #242424 |
+| text       | #F5F5DC |
+| textMuted  | #A0A0A0 |
 
 ---
 
-## Componentes Reutilizáveis
+## Reusable Components
 
-| Componente        | Usado em                        | Detalhe                            |
-| ----------------- | ------------------------------- | ---------------------------------- |
-| `ProductCard`     | ProductsScreen, FavoritesScreen | Usa CartContext + LanguageContext   |
-| `CartItem`        | CartScreen                      | Usa CartContext + LanguageContext   |
-| `TestimonialCard` | TestimonialsScreen              | Avatar com fallback de iniciais    |
-| `CategoryBadge`   | ProductDetailScreen             | Usa LanguageContext para traduzir  |
+| Component       | Usage               |
+| --------------- | ------------------- |
+| ProductCard     | Products, Favorites |
+| CartItem        | Cart                |
+| TestimonialCard | Testimonials        |
+| CategoryBadge   | Product Detail      |
 
 ---
 
-## Time
+## Team
 
-- ISLLAN TOSO PEREIRA
-- MARCELO PASSAMAI MARQUES
-- STEFANO SILVESTRI
+* Isllan Toso Pereira
+* Marcelo Passamai Marques
+* Stefano Silvestri
 
+---
 
-_Aurora Joias — Projeto Acadêmico 2026_
+Aurora Jewelry App — Academic Project 2026
