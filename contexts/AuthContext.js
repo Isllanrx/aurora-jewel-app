@@ -4,7 +4,6 @@ import { authSignIn, authSignUp, authSignOut } from '../lib/supabase';
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  // session = { access_token, user: { id, email, user_metadata } }
   const [session, setSession] = useState(null);
 
   const user  = session?.user  ?? null;

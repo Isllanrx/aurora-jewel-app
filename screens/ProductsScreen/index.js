@@ -38,13 +38,11 @@ export default function ProductsScreen({ navigation, route }) {
   const [category, setCategory] = useState(route.params?.category ?? 'all');
   const [loading, setLoading] = useState(true);
 
-  // Atualiza categoria quando HomeScreen navega com parâmetro
   useEffect(() => {
     const cat = route.params?.category;
     if (cat) setCategory(cat);
   }, [route.params?.category]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { fetchProducts(); }, []);
 
   useEffect(() => {

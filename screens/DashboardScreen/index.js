@@ -29,7 +29,6 @@ export default function DashboardScreen({ navigation }) {
   });
   const [loading, setLoading] = useState(true);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { fetchStats(); }, []);
 
   async function fetchStats() {
