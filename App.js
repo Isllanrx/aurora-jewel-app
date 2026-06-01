@@ -1,4 +1,3 @@
-// GestureHandlerRootView DEVE ser o wrapper mais externo (obrigatório para Drawer no web)
 import 'react-native-gesture-handler';
 import React from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
