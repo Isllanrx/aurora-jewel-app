@@ -3,28 +3,16 @@
     "name": "Aurora Joias",
     "slug": "aurora-jewel-app",
     "version": "1.0.0",
-    "sdkVersion": "51.0.0",
     "orientation": "portrait",
-    "icon": "https://raw.githubusercontent.com/Isllanrx/aurora-jewel-app/dc5732ef1a75e6e620eec609eb519930ba459051/assets/logo_joias.png",
+    "platforms": ["ios", "android", "web"],
     "userInterfaceStyle": "dark",
-    "splash": {
-      "image": "https://raw.githubusercontent.com/Isllanrx/aurora-jewel-app/dc5732ef1a75e6e620eec609eb519930ba459051/assets/logo_joias.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#0A0A0A"
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.aurorajoias.app"
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "https://raw.githubusercontent.com/Isllanrx/aurora-jewel-app/dc5732ef1a75e6e620eec609eb519930ba459051/assets/logo_joias.png",
-        "backgroundColor": "#0A0A0A"
-      },
       "package": "com.aurorajoias.app"
     },
-    "web": {
-      "favicon": "https://raw.githubusercontent.com/Isllanrx/aurora-jewel-app/dc5732ef1a75e6e620eec609eb519930ba459051/assets/logo_joias.png"
-    }
+    "web": {}
   }
 }

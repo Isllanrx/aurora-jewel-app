@@ -57,7 +57,7 @@ export default function ProductDetailScreen({ navigation, route }) {
 
   async function handleFavToggle() {
     if (!user) {
-      Alert.alert('Login necessário', 'Faça login para salvar favoritos.');
+      Alert.alert(t('loginRequired'), t('loginRequiredMsg'));
       return;
     }
     setFavLoading(true);
@@ -141,9 +141,9 @@ export default function ProductDetailScreen({ navigation, route }) {
           <CategoryBadge category={product.category} />
 
           <View style={styles.divider} />
-          <Text style={styles.descTitle}>Descrição</Text>
+          <Text style={styles.descTitle}>{t('description')}</Text>
           <Text style={styles.description}>
-            {product.description ?? 'Peça exclusiva Aurora Joias com garantia de autenticidade.'}
+            {product.description ?? t('defaultProductDesc')}
           </Text>
           <View style={{ height: 16 }} />
         </View>

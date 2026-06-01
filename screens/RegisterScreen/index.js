@@ -96,7 +96,7 @@ export default function RegisterScreen({ navigation }) {
     setLoading(true);
     try {
       await register(email, password, name, phone);
-      setFeedback({ type: 'success', text: 'Conta criada! Verifique seu e-mail para confirmar.' });
+      setFeedback({ type: 'success', text: t('registerSuccessMsg') });
       setTimeout(() => navigation.navigate('Login'), 2500);
     } catch (err) {
       setFeedback({ type: 'error', text: getFriendlyError(err.message, t) });

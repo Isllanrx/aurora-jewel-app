@@ -19,13 +19,13 @@ export default function CartScreen({ navigation }) {
   const { t } = useLanguage();
 
   function handleCheckout() {
-    Alert.alert(t('success'), 'Pedido realizado com sucesso.', [
+    Alert.alert(t('success'), t('orderSuccess'), [
       { text: 'OK', onPress: () => { clearCart(); navigation.navigate('Home'); } },
     ]);
   }
 
   function handleClear() {
-    Alert.alert('Limpar Carrinho', 'Remover todos os itens?', [
+    Alert.alert(t('clearCartTitle'), t('clearCartMsg'), [
       { text: t('cancel'), style: 'cancel' },
       { text: t('remove'), style: 'destructive', onPress: clearCart },
     ]);
@@ -40,7 +40,7 @@ export default function CartScreen({ navigation }) {
         <Text style={styles.headerTitle}>{t('myCart')}</Text>
         {cartItems.length > 0
           ? <TouchableOpacity onPress={handleClear}>
-              <Text style={styles.clearBtn}>Limpar</Text>
+              <Text style={styles.clearBtn}>{t('clearBtn')}</Text>
             </TouchableOpacity>
           : <View style={{ width: 40 }} />
         }

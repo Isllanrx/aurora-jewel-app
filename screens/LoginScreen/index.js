@@ -85,7 +85,7 @@ export default function LoginScreen({ navigation }) {
             />
           )}
           <Text style={styles.brandName}>Aurora Joias</Text>
-          <Text style={styles.tagline}>Elegância e Sofisticação</Text>
+          <Text style={styles.tagline}>{t('tagline')}</Text>
         </View>
 
         <Text style={styles.title}>{t('loginTitle')}</Text>
@@ -157,7 +157,7 @@ export default function LoginScreen({ navigation }) {
 
         <View style={styles.dividerRow}>
           <View style={styles.dividerLine} />
-          <Text style={styles.dividerText}>ou</Text>
+          <Text style={styles.dividerText}>{t('or')}</Text>
           <View style={styles.dividerLine} />
         </View>
 

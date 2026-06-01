@@ -58,15 +58,13 @@ export default function HomeScreen({ navigation }) {
         {/* Hero */}
         <View style={styles.hero}>
           <View style={styles.heroTag}>
-            <Text style={styles.heroTagText}>Coleção Exclusiva</Text>
+            <Text style={styles.heroTagText}>{t('exclusiveCollection')}</Text>
           </View>
           <Text style={styles.heroTitle}>
-            Pura{'\n'}
-            <Text style={styles.heroGold}>Elegância</Text>
+            {t('heroPure')}{'\n'}
+            <Text style={styles.heroGold}>{t('heroElegance')}</Text>
           </Text>
-          <Text style={styles.heroSubtitle}>
-            Descubra peças únicas que unem tradição artesanal e design contemporâneo.
-          </Text>
+          <Text style={styles.heroSubtitle}>{t('heroDescription')}</Text>
           {bannerError ? (
             <View style={[styles.heroImage, { justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.card, borderRadius: 12 }]}>
               <Ionicons name="image-outline" size={48} color={Colors.textMuted} />
@@ -86,7 +84,7 @@ export default function HomeScreen({ navigation }) {
                 onPress={() => navigation.navigate('Products')}
                 activeOpacity={0.8}
               >
-                <Text style={styles.heroBtnTextPrimary}>Ver Coleção</Text>
+                <Text style={styles.heroBtnTextPrimary}>{t('viewCollection')}</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.heroBtnWrapper}>
@@ -95,7 +93,7 @@ export default function HomeScreen({ navigation }) {
                 onPress={() => navigation.navigate('Testimonials')}
                 activeOpacity={0.8}
               >
-                <Text style={styles.heroBtnTextSecondary}>Depoimentos</Text>
+                <Text style={styles.heroBtnTextSecondary}>{t('testimonials')}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -113,9 +111,9 @@ export default function HomeScreen({ navigation }) {
 
         {/* Categories */}
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Categorias</Text>
+          <Text style={styles.sectionTitle}>{t('categories')}</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Products')}>
-            <Text style={styles.seeAll}>Ver todos</Text>
+            <Text style={styles.seeAll}>{t('viewAll')}</Text>
           </TouchableOpacity>
         </View>
         <FlatList

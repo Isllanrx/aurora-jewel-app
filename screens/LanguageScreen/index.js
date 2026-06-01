@@ -34,9 +34,7 @@ export default function LanguageScreen({ navigation }) {
       </View>
 
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-        <Text style={styles.subtitle}>
-          Selecione o idioma do aplicativo
-        </Text>
+        <Text style={styles.subtitle}>{t('selectLanguageSubtitle')}</Text>
 
         {LANGUAGES.map(({ code, label, nameKey, nativeName }) => {
           const isActive = selected === code;

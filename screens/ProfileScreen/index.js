@@ -37,7 +37,7 @@ export default function ProfileScreen({ navigation }) {
     try {
       await dbUpdate('profiles', { id: user.id }, { name, phone }, token);
       setEditing(false);
-      Alert.alert(t('success'), 'Perfil atualizado.');
+      Alert.alert(t('success'), t('profileUpdated'));
     } catch (err) {
       Alert.alert(t('error'), err.message);
     } finally {
@@ -46,7 +46,7 @@ export default function ProfileScreen({ navigation }) {
   }
 
   async function handleLogout() {
-    Alert.alert(t('logout'), 'Deseja sair da sua conta?', [
+    Alert.alert(t('logout'), t('logoutConfirmMsg'), [
       { text: t('cancel'), style: 'cancel' },
       {
         text: t('logout'),
@@ -86,7 +86,7 @@ export default function ProfileScreen({ navigation }) {
           ) : null}
         </View>
 
-        <Text style={styles.sectionTitle}>Dados Pessoais</Text>
+        <Text style={styles.sectionTitle}>{t('personalData')}</Text>
 
         <Text style={styles.label}>{t('name')}</Text>
         <TextInput

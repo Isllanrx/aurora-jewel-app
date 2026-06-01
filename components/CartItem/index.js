@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useCart } from '../../contexts/CartContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { Images } from '../../lib/assets';
 import styles from './styles';
 import { Colors } from '../../lib/colors';
@@ -20,6 +21,7 @@ const CATEGORY_IMAGES = {
 
 export default function CartItem({ item }) {
   const { updateQuantity, removeFromCart } = useCart();
+  const { t } = useLanguage();
   const [imgError, setImgError] = useState(false);
 
   function formatBRL(value) {
@@ -54,7 +56,7 @@ export default function CartItem({ item }) {
         <Text style={styles.name} numberOfLines={2}>{item.name}</Text>
         <Text style={styles.price}>{formatBRL(item.price)}</Text>
         <Text style={styles.subtotal}>
-          Subtotal: {formatBRL(item.price * item.quantity)}
+          {t('subtotal')}: {formatBRL(item.price * item.quantity)}
         </Text>
 
         <View style={styles.controls}>
