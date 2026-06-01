@@ -6,6 +6,10 @@ Mobile application for a luxury jewelry store built with **Expo SDK 54 + React N
 
 ---
 
+## Prototype (Figma)
+
+[View Interactive Prototype](https://www.figma.com/proto/Dh9aJJGeaxW6eiMz2ZkrUb/Projeto-devmobile?node-id=2-2&p=f&t=pMyFTEbD8noVidC6-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=2%3A2)
+
 ## Tech Stack
 
 | Layer              | Technology                                                      |
