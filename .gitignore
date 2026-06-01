@@ -36,10 +36,11 @@ assets/
 .claudeignore
 .geminiignore
 
-# SQL schema — ferramenta de desenvolvimento, não necessário no Snack
+# SQL schema legado — substituído por supabase/migrations/
 supabase_schema.sql
 
 # Markdown — docs de dev/AI, não necessários no Snack
-# README.md é mantido rastreado (exceção abaixo)
+# README.md e supabase/README.md são mantidos rastreados
 *.md
 !README.md
+!supabase/README.md
