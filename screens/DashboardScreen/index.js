@@ -17,11 +17,11 @@ import { Colors } from '../../lib/colors';
 
 const BAR_MAX = Dimensions.get('window').width - 80;
 
-const CATEGORY_LABELS = { relogio: 'Relógios', anel: 'Anéis', cordao: 'Cordões' };
-
 export default function DashboardScreen({ navigation }) {
   const { token } = useAuth();
   const { t } = useLanguage();
+
+  const CATEGORY_LABELS = { relogio: t('watches'), anel: t('rings'), cordao: t('necklaces') };
   const [stats, setStats] = useState({
     totalUsers: 0,
     totalProducts: 0,
