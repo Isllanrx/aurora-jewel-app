@@ -1,11 +1,11 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
-import { ActivityIndicator, Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, Alert, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../../contexts/AuthContext";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { Colors } from "../../lib/colors";
-import { dbUpdate } from "../../lib/supabase";
+import { dbSelect, dbUpdate } from "../../lib/supabase";
 import styles from "./styles";
 
 export default function ProfileScreen({ navigation }) {
@@ -15,6 +15,25 @@ export default function ProfileScreen({ navigation }) {
   const [saving, setSaving] = useState(false);
   const [name, setName] = useState(user?.user_metadata?.name ?? "");
   const [phone, setPhone] = useState(user?.user_metadata?.phone ?? "");
+
+  async function fetchProfile() {
+    if (!user) return;
+    try {
+      const data = await dbSelect("profiles", { id: `eq.${user.id}` }, token);
+      if (data && data.length > 0) {
+        setName(data[0].name ?? "");
+        setPhone(data[0].phone ?? "");
+      }
+    } catch (err) {
+      console.warn("Profile fetch error:", err.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchProfile();
+    const unsub = navigation.addListener("focus", fetchProfile);
+    return unsub;
+  }, [user, token, navigation]);
 
   const initials = name
     ? name
@@ -41,17 +60,24 @@ export default function ProfileScreen({ navigation }) {
   }
 
   async function handleLogout() {
-    Alert.alert(t("logout"), t("logoutConfirmMsg"), [
-      { text: t("cancel"), style: "cancel" },
-      {
-        text: t("logout"),
-        style: "destructive",
-        onPress: async () => {
-          await logout();
-          navigation.replace("Login");
+    if (Platform.OS === "web") {
+      if (window.confirm(t("logoutConfirmMsg"))) {
+        await logout();
+        navigation.replace("Login");
+      }
+    } else {
+      Alert.alert(t("logout"), t("logoutConfirmMsg"), [
+        { text: t("cancel"), style: "cancel" },
+        {
+          text: t("logout"),
+          style: "destructive",
+          onPress: async () => {
+            await logout();
+            navigation.replace("Login");
+          },
         },
-      },
-    ]);
+      ]);
+    }
   }
 
   return (

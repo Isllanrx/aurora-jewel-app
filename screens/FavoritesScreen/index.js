@@ -22,31 +22,34 @@ export default function FavoritesScreen({ navigation }) {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchFavorites() {
-      if (!user) {
-        setLoading(false);
+  async function fetchFavorites() {
+    if (!user) {
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    try {
+      const rows = await dbSelect("favorites", { user_id: `eq.${user.id}` }, token);
+      const productIds = rows.map((r) => r.product_id);
+      if (productIds.length === 0) {
+        setFavorites([]);
         return;
       }
-      setLoading(true);
-      try {
-        const rows = await dbSelect("favorites", { user_id: `eq.${user.id}` }, token);
-        const productIds = rows.map((r) => r.product_id);
-        if (productIds.length === 0) {
-          setFavorites([]);
-          return;
-        }
-        const products = await dbSelect("products", { id: `in.(${productIds.join(",")})` }, token);
-        setFavorites(products);
-      } catch (err) {
-        console.warn("FavoritesScreen fetch:", err.message);
-        setFavorites([]);
-      } finally {
-        setLoading(false);
-      }
+      const products = await dbSelect("products", { id: `in.(${productIds.join(",")})` }, token);
+      setFavorites(products);
+    } catch (err) {
+      console.warn("FavoritesScreen fetch:", err.message);
+      setFavorites([]);
+    } finally {
+      setLoading(false);
     }
+  }
+
+  useEffect(() => {
     fetchFavorites();
-  }, [user, token]);
+    const unsub = navigation.addListener("focus", fetchFavorites);
+    return unsub;
+  }, [user, token, navigation]);
 
   function getImage(product) {
     if (product.image_url) return { uri: product.image_url };

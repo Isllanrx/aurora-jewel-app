@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Alert, FlatList, Text, TouchableOpacity, View } from "react-native";
+import { Alert, FlatList, Platform, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CartItem from "../../components/CartItem";
 import { useCart } from "../../contexts/CartContext";
@@ -12,22 +12,36 @@ export default function CartScreen({ navigation }) {
   const { t } = useLanguage();
 
   function handleCheckout() {
-    Alert.alert(t("success"), t("orderSuccess"), [
-      {
-        text: "OK",
-        onPress: () => {
-          clearCart();
-          navigation.navigate("Home");
+    const msg = t("orderSuccess");
+
+    if (Platform.OS === "web") {
+      window.alert(msg);
+      clearCart();
+      navigation.navigate("Home");
+    } else {
+      Alert.alert(t("success"), msg, [
+        {
+          text: "OK",
+          onPress: () => {
+            clearCart();
+            navigation.navigate("Home");
+          },
         },
-      },
-    ]);
+      ]);
+    }
   }
 
   function handleClear() {
-    Alert.alert(t("clearCartTitle"), t("clearCartMsg"), [
-      { text: t("cancel"), style: "cancel" },
-      { text: t("remove"), style: "destructive", onPress: clearCart },
-    ]);
+    if (Platform.OS === "web") {
+      if (window.confirm(t("clearCartMsg"))) {
+        clearCart();
+      }
+    } else {
+      Alert.alert(t("clearCartTitle"), t("clearCartMsg"), [
+        { text: t("cancel"), style: "cancel" },
+        { text: t("remove"), style: "destructive", onPress: clearCart },
+      ]);
+    }
   }
 
   return (

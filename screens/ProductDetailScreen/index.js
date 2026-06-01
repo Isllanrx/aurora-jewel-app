@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Image, Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CategoryBadge from "../../components/CategoryBadge";
 import { useAuth } from "../../contexts/AuthContext";
@@ -46,7 +46,13 @@ export default function ProductDetailScreen({ navigation, route }) {
 
   async function handleFavToggle() {
     if (!user) {
-      Alert.alert(t("loginRequired"), t("loginRequiredMsg"));
+      const title = t("loginRequired");
+      const msg = t("loginRequiredMsg");
+      if (Platform.OS === "web") {
+        window.alert(`${title}: ${msg}`);
+      } else {
+        Alert.alert(title, msg);
+      }
       return;
     }
     setFavLoading(true);

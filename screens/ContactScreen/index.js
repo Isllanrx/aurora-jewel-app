@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { Colors } from "../../lib/colors";
@@ -14,6 +14,12 @@ const CONTACTS = [
 
 export default function ContactScreen({ navigation }) {
   const { t } = useLanguage();
+
+  function openMap() {
+    const address = encodeURIComponent("Rua das Joias, 123 Vila Velha ES");
+    const url = `https://www.google.com/maps/search/?api=1&query=${address}`;
+    Linking.openURL(url);
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,10 +44,10 @@ export default function ContactScreen({ navigation }) {
           </View>
         ))}
 
-        <View style={styles.mapPlaceholder}>
-          <Ionicons name="map-outline" size={40} color={Colors.textMuted} />
-          <Text style={styles.mapText}>Mapa Ilustrativo</Text>
-        </View>
+        <TouchableOpacity style={styles.mapPlaceholder} onPress={openMap} activeOpacity={0.7}>
+          <Ionicons name="map-outline" size={40} color={Colors.secondary} />
+          <Text style={styles.mapText}>{t("viewCollection")}</Text>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
