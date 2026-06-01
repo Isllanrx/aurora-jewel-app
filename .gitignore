@@ -37,8 +37,12 @@ assets/
 .claudeignore
 .geminiignore
 
-# SQL schema legado — substituído por supabase/migrations/
+# SQL schema legado e migrations — não necessários no Snack
 supabase_schema.sql
+supabase/
+
+# Arquivos de exemplo de configuração
+.env.example
 
 # Markdown — docs de dev/AI, não necessários no Snack
 # README.md e supabase/README.md são mantidos rastreados
