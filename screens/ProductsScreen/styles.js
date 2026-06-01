@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { Colors } from '../../lib/colors';
 
 export default StyleSheet.create({
@@ -14,40 +14,41 @@ export default StyleSheet.create({
     paddingVertical: 12,
     backgroundColor: Colors.surface,
   },
-  hamburgerIcon: {
-    fontSize: 22,
-    color: Colors.text,
-  },
   headerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     color: Colors.secondary,
   },
-  cartIcon: {
-    fontSize: 22,
-  },
   filterRow: {
     paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingTop: 10,
+    paddingBottom: 6,
     backgroundColor: Colors.surface,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
   },
   filterLabel: {
-    color: Colors.textMuted,
+    color: Colors.secondary,
     fontSize: 12,
-    marginBottom: 4,
+    fontWeight: '600',
+    letterSpacing: 0.4,
+    marginBottom: 6,
   },
   pickerWrapper: {
     backgroundColor: Colors.card,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: Colors.border,
-    overflow: 'hidden',
+    borderColor: Colors.primary,
   },
   picker: {
     color: Colors.text,
-    height: 44,
+    height: 48,
+    backgroundColor: Platform.OS === 'android' ? Colors.card : 'transparent',
+  },
+  pickerItem: {
+    backgroundColor: Colors.card,
+    color: Colors.text,
+    fontSize: 14,
   },
   listContent: {
     padding: 12,
@@ -63,6 +64,7 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: Colors.background,
   },
   row: {
     justifyContent: 'space-between',

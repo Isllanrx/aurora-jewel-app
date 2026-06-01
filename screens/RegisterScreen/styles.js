@@ -11,14 +11,35 @@ export default StyleSheet.create({
     paddingHorizontal: 28,
     paddingVertical: 32,
   },
+  topRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 24,
+  },
   backButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 24,
   },
   backText: {
     color: Colors.secondary,
     fontSize: 14,
+    marginLeft: 4,
+  },
+  langBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    backgroundColor: Colors.card,
+  },
+  langBtnText: {
+    color: Colors.secondary,
+    fontSize: 12,
+    fontWeight: 'bold',
     marginLeft: 4,
   },
   title: {

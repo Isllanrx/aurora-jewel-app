@@ -100,8 +100,11 @@ export default function DrawerContent(props) {
       <TouchableOpacity
         style={styles.logoutButton}
         onPress={async () => {
-          await logout();
-          navigation.navigate('Login');
+          try {
+            await logout();
+          } finally {
+            navigation.navigate('Login');
+          }
         }}
         activeOpacity={0.7}
       >

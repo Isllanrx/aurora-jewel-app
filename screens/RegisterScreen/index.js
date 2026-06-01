@@ -17,6 +17,20 @@ import { Colors } from '../../lib/colors';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const LANG_CYCLE = ['pt', 'en', 'es'];
+const LANG_LABEL = { pt: 'PT', en: 'EN', es: 'ES' };
+
+function getFriendlyError(rawMessage, t) {
+  const msg = (rawMessage ?? '').toLowerCase();
+  if (msg.includes('already registered') || msg.includes('already been registered') || msg.includes('user already exists')) {
+    return t('registerEmailUsed');
+  }
+  if (msg.includes('invalid') || msg.includes('weak password')) {
+    return t('genericAuthError');
+  }
+  return t('genericAuthError');
+}
+
 function validatePhone(value) {
   const digits = value.replace(/\D/g, '');
   return (digits.length === 10 || digits.length === 11) || 'Telefone inválido';
@@ -56,7 +70,7 @@ function Field({ control, errors, name, label, placeholder, keyboardType, secure
 
 export default function RegisterScreen({ navigation }) {
   const { register } = useAuth();
-  const { t } = useLanguage();
+  const { t, language, changeLanguage } = useLanguage();
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState(null);
 
@@ -71,6 +85,12 @@ export default function RegisterScreen({ navigation }) {
 
   const passwordValue = watch('password');
 
+  function cycleLang() {
+    const idx = LANG_CYCLE.indexOf(language);
+    const next = LANG_CYCLE[(idx + 1) % LANG_CYCLE.length];
+    changeLanguage(next);
+  }
+
   async function onSubmit({ email, password, name, phone }) {
     setFeedback(null);
     setLoading(true);
@@ -79,7 +99,7 @@ export default function RegisterScreen({ navigation }) {
       setFeedback({ type: 'success', text: 'Conta criada! Verifique seu e-mail para confirmar.' });
       setTimeout(() => navigation.navigate('Login'), 2500);
     } catch (err) {
-      setFeedback({ type: 'error', text: err.message });
+      setFeedback({ type: 'error', text: getFriendlyError(err.message, t) });
     } finally {
       setLoading(false);
     }
@@ -88,10 +108,16 @@ export default function RegisterScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={20} color={Colors.secondary} />
-          <Text style={styles.backText}>{t('back')}</Text>
-        </TouchableOpacity>
+        <View style={styles.topRow}>
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back" size={20} color={Colors.secondary} />
+            <Text style={styles.backText}>{t('back')}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.langBtn} onPress={cycleLang} activeOpacity={0.7}>
+            <Ionicons name="globe-outline" size={14} color={Colors.secondary} />
+            <Text style={styles.langBtnText}>{LANG_LABEL[language]}</Text>
+          </TouchableOpacity>
+        </View>
 
         <Text style={styles.title}>{t('registerTitle')}</Text>
         <Text style={styles.subtitle}>{t('registerSubtitle')}</Text>

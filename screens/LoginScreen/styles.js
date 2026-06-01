@@ -1,19 +1,38 @@
-import { StyleSheet } from 'react-native';
-import { Colors } from '../../lib/colors';
+import { StyleSheet } from "react-native";
+import { Colors } from "../../lib/colors";
 
 export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
   },
+  langBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-end',
+    marginTop: 8,
+    marginRight: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    backgroundColor: Colors.card,
+  },
+  langBtnText: {
+    color: Colors.secondary,
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginLeft: 4,
+  },
   scroll: {
     flexGrow: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     paddingHorizontal: 28,
     paddingVertical: 40,
   },
   logoWrapper: {
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 32,
   },
   logo: {
@@ -25,7 +44,7 @@ export default StyleSheet.create({
   },
   brandName: {
     fontSize: 26,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.secondary,
     marginTop: 12,
     letterSpacing: 1.5,
@@ -37,7 +56,7 @@ export default StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.text,
     marginBottom: 4,
   },
@@ -74,7 +93,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.primary,
     borderRadius: 10,
     paddingVertical: 14,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 28,
   },
   buttonDisabled: {
@@ -83,12 +102,12 @@ export default StyleSheet.create({
   buttonText: {
     color: Colors.white,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     letterSpacing: 0.5,
   },
   dividerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginVertical: 20,
   },
   dividerLine: {
@@ -102,8 +121,8 @@ export default StyleSheet.create({
     fontSize: 13,
   },
   registerRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
     marginTop: 8,
   },
   registerText: {
@@ -113,12 +132,12 @@ export default StyleSheet.create({
   registerLink: {
     color: Colors.secondary,
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginLeft: 4,
   },
   banner: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderRadius: 10,
     paddingHorizontal: 14,
     paddingVertical: 12,

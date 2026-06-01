@@ -19,9 +19,23 @@ import { Colors } from '../../lib/colors';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const LANG_CYCLE = ['pt', 'en', 'es'];
+const LANG_LABEL = { pt: 'PT', en: 'EN', es: 'ES' };
+
+function getFriendlyError(rawMessage, t) {
+  const msg = (rawMessage ?? '').toLowerCase();
+  if (msg.includes('invalid login credentials') || msg.includes('invalid credentials') || msg.includes('email not confirmed')) {
+    return t('invalidCredentials');
+  }
+  if (msg.includes('already registered') || msg.includes('already been registered') || msg.includes('user already exists')) {
+    return t('registerEmailUsed');
+  }
+  return t('genericAuthError');
+}
+
 export default function LoginScreen({ navigation }) {
   const { login } = useAuth();
-  const { t } = useLanguage();
+  const { t, language, changeLanguage } = useLanguage();
   const [loading, setLoading] = useState(false);
   const [logoError, setLogoError] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -30,6 +44,12 @@ export default function LoginScreen({ navigation }) {
     defaultValues: { email: '', password: '' },
   });
 
+  function cycleLang() {
+    const idx = LANG_CYCLE.indexOf(language);
+    const next = LANG_CYCLE[(idx + 1) % LANG_CYCLE.length];
+    changeLanguage(next);
+  }
+
   async function onSubmit({ email, password }) {
     setErrorMsg(null);
     setLoading(true);
@@ -37,7 +57,7 @@ export default function LoginScreen({ navigation }) {
       await login(email, password);
       navigation.replace('Main');
     } catch (err) {
-      setErrorMsg(err.message);
+      setErrorMsg(getFriendlyError(err.message, t));
     } finally {
       setLoading(false);
     }
@@ -45,6 +65,11 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
+      <TouchableOpacity style={styles.langBtn} onPress={cycleLang} activeOpacity={0.7}>
+        <Ionicons name="globe-outline" size={14} color={Colors.secondary} />
+        <Text style={styles.langBtnText}>{LANG_LABEL[language]}</Text>
+      </TouchableOpacity>
+
       <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
         <View style={styles.logoWrapper}>
           {logoError ? (

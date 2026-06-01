@@ -38,10 +38,15 @@ export default function ProductsScreen({ navigation, route }) {
   const [category, setCategory] = useState(route.params?.category ?? 'all');
   const [loading, setLoading] = useState(true);
 
+  // Atualiza categoria quando HomeScreen navega com parâmetro
+  useEffect(() => {
+    const cat = route.params?.category;
+    if (cat) setCategory(cat);
+  }, [route.params?.category]);
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { fetchProducts(); }, []);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     applyFilter(category, products);
   }, [category, products]);
@@ -97,10 +102,30 @@ export default function ProductsScreen({ navigation, route }) {
             style={styles.picker}
             dropdownIconColor={Colors.secondary}
           >
-            <Picker.Item label={t('allCategories')} value="all" />
-            <Picker.Item label={t('watches')}       value="relogio" />
-            <Picker.Item label={t('rings')}         value="anel" />
-            <Picker.Item label={t('necklaces')}     value="cordao" />
+            <Picker.Item
+              label={t('allCategories')}
+              value="all"
+              color={Colors.text}
+              style={styles.pickerItem}
+            />
+            <Picker.Item
+              label={t('watches')}
+              value="relogio"
+              color={Colors.text}
+              style={styles.pickerItem}
+            />
+            <Picker.Item
+              label={t('rings')}
+              value="anel"
+              color={Colors.text}
+              style={styles.pickerItem}
+            />
+            <Picker.Item
+              label={t('necklaces')}
+              value="cordao"
+              color={Colors.text}
+              style={styles.pickerItem}
+            />
           </Picker>
         </View>
       </View>
