@@ -6,12 +6,21 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
   },
+  topBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 8,
+    marginHorizontal: 20,
+  },
+  professorText: {
+    fontSize: 11,
+    color: Colors.textMuted,
+    flexShrink: 1,
+  },
   langBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'flex-end',
-    marginTop: 8,
-    marginRight: 20,
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 14,
@@ -149,5 +158,22 @@ export default StyleSheet.create({
     fontSize: 14,
     marginLeft: 8,
     flexShrink: 1,
+  },
+  teamFooter: {
+    alignItems: 'center',
+    marginTop: 36,
+    marginBottom: 8,
+  },
+  teamDivider: {
+    width: 48,
+    height: 1,
+    backgroundColor: Colors.border,
+    marginBottom: 14,
+  },
+  teamName: {
+    fontSize: 11,
+    color: Colors.textMuted,
+    letterSpacing: 0.8,
+    marginBottom: 4,
   },
 });

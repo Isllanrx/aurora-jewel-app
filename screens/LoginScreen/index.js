@@ -65,10 +65,13 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={styles.langBtn} onPress={cycleLang} activeOpacity={0.7}>
-        <Ionicons name="globe-outline" size={14} color={Colors.secondary} />
-        <Text style={styles.langBtnText}>{LANG_LABEL[language]}</Text>
-      </TouchableOpacity>
+      <View style={styles.topBar}>
+        <Text style={styles.professorText}>Professor: Saulo Pereira Ribeiro</Text>
+        <TouchableOpacity style={styles.langBtn} onPress={cycleLang} activeOpacity={0.7}>
+          <Ionicons name="globe-outline" size={14} color={Colors.secondary} />
+          <Text style={styles.langBtnText}>{LANG_LABEL[language]}</Text>
+        </TouchableOpacity>
+      </View>
 
       <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
         <View style={styles.logoWrapper}>
@@ -166,6 +169,13 @@ export default function LoginScreen({ navigation }) {
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
             <Text style={styles.registerLink}>{t('register')}</Text>
           </TouchableOpacity>
+        </View>
+
+        <View style={styles.teamFooter}>
+          <View style={styles.teamDivider} />
+          <Text style={styles.teamName}>ISLLAN TOSO PEREIRA</Text>
+          <Text style={styles.teamName}>MARCELO PASSAMAI MARQUES</Text>
+          <Text style={styles.teamName}>STEFANO SILVESTRI</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
