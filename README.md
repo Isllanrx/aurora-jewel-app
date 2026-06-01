@@ -1,6 +1,6 @@
 # Aurora Joias
 
-App mobile de joalheria de luxo construído com **Expo SDK 51 + React Native 0.74**, integrado ao Supabase e com suporte a PT / EN / ES.
+App mobile de joalheria de luxo construído com **Expo SDK 54 + React Native 0.76**, integrado ao Supabase e com suporte a PT / EN / ES.
 Projeto acadêmico — 2º Bimestre | Desenvolvimento Mobile.
 
 ---
@@ -9,14 +9,14 @@ Projeto acadêmico — 2º Bimestre | Desenvolvimento Mobile.
 
 | Camada        | Tecnologia                                                      |
 | ------------- | --------------------------------------------------------------- |
-| Runtime       | Expo SDK 51 + React Native 0.74                                 |
-| Navegação     | React Navigation 6 — Stack + Drawer customizado                 |
+| Runtime       | Expo SDK 54 + React Native 0.76.7                               |
+| Navegação     | React Navigation 7 — Stack + Drawer customizado                 |
 | Formulários   | React Hook Form 7 (`useForm` + `Controller`)                    |
 | Backend       | Supabase REST + Auth API via `fetch` (sem SDK)                  |
 | Estado global | React Context — `AuthContext`, `CartContext`, `LanguageContext` |
-| i18n          | PT / EN / ES via `LanguageContext` + `lib/i18n.js`              |
-| Ícones        | `@expo/vector-icons` — Ionicons                                 |
-| Filtros       | `@react-native-picker/picker` (RNPicker + FlatList)             |
+| i18n          | PT / EN / ES via `LanguageContext` + `lib/i18n.js` (110+ chaves)|
+| Ícones        | `@expo/vector-icons` v15 — Ionicons                             |
+| Filtros       | `@react-native-picker/picker` (nativo) + Modal (web/Snack)      |
 
 ---
 
@@ -29,7 +29,7 @@ Projeto acadêmico — 2º Bimestre | Desenvolvimento Mobile.
 | 3   | Dashboard     | Obrigatória | Total de usuários (RPC) + produtos por categoria com barras        |
 | 4   | Language      | Obrigatória | Seletor PT / EN / ES via LanguageContext                           |
 | 5   | Home          | Custom      | Hero, stats, categorias com navegação filtrada                     |
-| 6   | Products      | Custom      | RNPicker + FlatList (filtro por categoria), pré-filtro da Home     |
+| 6   | Products      | Custom      | RNPicker nativo + Modal web + FlatList (filtro por categoria)      |
 | 7   | ProductDetail | Custom      | Detalhe, toggle favorito (POST/DELETE Supabase), AddToCart         |
 | 8   | Cart          | Custom      | Lista com CartItem, total e checkout via CartContext               |
 | 9   | Favorites     | Custom      | Wishlist carregada do Supabase com useEffect                       |
@@ -142,7 +142,7 @@ graph TD
 
     MD --> DC[DrawerContent\nCustomizado]
     MD --> HS[HomeScreen]
-    MD --> PS[ProductsScreen\nRNPicker + FlatList]
+    MD --> PS[ProductsScreen\nPicker nativo + Modal web]
     MD --> PDS[ProductDetailScreen]
     MD --> CS[CartScreen]
     MD --> FS[FavoritesScreen]
@@ -178,36 +178,40 @@ npx expo start --web    # versão web no navegador
 npx expo start --android
 ```
 
-### Expo Snack
+### Expo Snack (recomendado para demo)
 
-1. Acesse [snack.expo.dev](https://snack.expo.dev) → **Create a snack**
-2. Faça upload de todos os arquivos (exceto `assets/` — imagens via GitHub URL)
-3. Plataforma **Web** → **Run**
+1. Acesse [snack.expo.dev](https://snack.expo.dev)
+2. Clique em `...` → **Import git repository**
+3. Preencha:
+   - **Repository URL:** `https://github.com/Isllanrx/aurora-jewel-app`
+   - **Folder path:** *(deixar vazio)*
+   - **Branch:** `main`
+4. Aguarde o import e selecione **Web** como plataforma
 
 ---
 
 ## Configuração do Supabase
 
+O projeto já vem com credenciais configuradas em `lib/supabase.js` (anon key pública, protegida por RLS).
+
+Para usar seu próprio projeto Supabase:
+
 1. Crie um projeto em [supabase.com](https://supabase.com)
 2. Em **Authentication → Providers → Email** → desmarque **"Confirm email"**
-3. Execute as migrations em ordem no **SQL Editor**:
-
-```
-supabase/migrations/001_tables.sql
-supabase/migrations/002_triggers.sql
-supabase/migrations/003_rls.sql
-supabase/migrations/004_rpc.sql
-supabase/migrations/005_seed.sql
-```
-
-4. Copie a **Project URL** e a **anon key** em **Settings → API** e cole em `lib/supabase.js`:
+3. Execute as migrations locais em ordem no **SQL Editor**:
+   - `supabase/migrations/001_tables.sql`
+   - `supabase/migrations/002_triggers.sql`
+   - `supabase/migrations/003_rls.sql`
+   - `supabase/migrations/004_rpc.sql`
+   - `supabase/migrations/005_seed.sql`
+4. Substitua em `lib/supabase.js`:
 
 ```js
 export const SUPABASE_URL     = 'https://SEU_PROJETO.supabase.co';
-export const SUPABASE_API_KEY = 'SUA_CHAVE_ANON_AQUI';
+export const SUPABASE_API_KEY = 'SUA_CHAVE_ANON';
 ```
 
-> Veja [`supabase/README.md`](supabase/README.md) para instruções detalhadas.
+> As migrations existem localmente mas não são rastreadas no git (arquivos `.sql` causam falha no import do Expo Snack).
 
 ---
 
@@ -240,12 +244,12 @@ Tema: **Dark + Luxury Gold**
 
 ## Componentes Reutilizáveis
 
-| Componente        | Usado em                        |
-| ----------------- | ------------------------------- |
-| `ProductCard`     | ProductsScreen, FavoritesScreen |
-| `CartItem`        | CartScreen                      |
-| `TestimonialCard` | TestimonialsScreen              |
-| `CategoryBadge`   | ProductDetailScreen             |
+| Componente        | Usado em                        | Detalhe                            |
+| ----------------- | ------------------------------- | ---------------------------------- |
+| `ProductCard`     | ProductsScreen, FavoritesScreen | Usa CartContext + LanguageContext   |
+| `CartItem`        | CartScreen                      | Usa CartContext + LanguageContext   |
+| `TestimonialCard` | TestimonialsScreen              | Avatar com fallback de iniciais    |
+| `CategoryBadge`   | ProductDetailScreen             | Usa LanguageContext para traduzir  |
 
 ---
 
