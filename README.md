@@ -256,7 +256,8 @@ Tema: **Dark + Luxury Gold**
 ## Time
 
 - ISLLAN TOSO PEREIRA
-- STEFANO SILVESTRI
 - MARCELO PASSAMAI MARQUES
+- STEFANO SILVESTRI
+
 
 _Aurora Joias — Projeto Acadêmico 2026_
